@@ -106,13 +106,13 @@
 
                             if (!slides[i].isVisible) {
                                 options.playerSidebar.html(slides[i].content);
-                                options.playerSidebar.fadeIn();
+                                options.playerSidebar.removeClass('zoomOutUp').addClass('lightSpeedIn');
                                 slides[i].isVisible = true;
                             }
                         }
                         else {
                             if (slides[i].isVisible) {
-                                options.playerSidebar.fadeOut();
+                                options.playerSidebar.removeClass('lightSpeedIn').addClass('zoomOutUp');
                                 slides[i].isVisible = false;
                             }
                         }
