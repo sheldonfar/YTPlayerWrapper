@@ -4,6 +4,15 @@ Simple wrapper around YT video player to collect video stats and show slides
 
 #Usage
 ```
+<div class="row">
+ <div class="col-lg-6">
+   <div id="ytplayer"></div>
+ </div>
+ <div class="col-lg-6">
+   <div class="player-sidebar"></div>
+ </div>
+ </div>
+<script>
 $('#ytplayer').YTPlayer({
         // Basic setting
         width: 800,                // video width
@@ -60,6 +69,7 @@ $('#ytplayer').YTPlayer({
         ]
 
     });
+ </script>
 ```
 
 #Demo
