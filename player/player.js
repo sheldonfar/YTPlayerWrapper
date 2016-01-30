@@ -1,5 +1,6 @@
 (function (window, $) {
-    var ytp = (function () {
+    window.ytp = (function () {
+        var version = '0.0.1';
         var elementId, sessionId, videoOptions, player, playerState;
         var slides = [];
         var statsCollected = false;
@@ -23,6 +24,7 @@
                 //window.onbeforeunload = ytp.beforeUnload();
                 return firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
             },
+
             initializeVideo: function () {
                 player = new YT.Player(elementId, {
                     width: videoOptions.width,
@@ -40,10 +42,10 @@
                         onError: videoOptions.onError
                     }
                 });
-
             },
             onPlayerStateChange: function (e) {
                 playerState = e.data;
+                videoOptions.onStateChange(e);
                 switch (e.data) {
                     case 0:
                         typeof videoOptions.onEnd === "function" ? videoOptions.onEnd(e) : void 0;
@@ -58,11 +60,45 @@
                         ytp.buildIntervals();
                         ytp.sendStats();
                         break;
-
                     case 3:
                         typeof videoOptions.onBuffer === "function" ? videoOptions.onBuffer(e) : void 0;
                         break;
                 }
+            },
+            play: function () {
+                player.playVideo();
+                return this;
+            },
+            pause: function () {
+                player.pauseVideo();
+                return this;
+            },
+            seekTo: function (time) {
+                player.seekTo(time);
+                return this;
+            },
+            volume: function (vol) {
+                player.setVolume(vol);
+                return this;
+            },
+            mute: function () {
+                player.mute();
+                return this;
+            },
+            getPlayer: function () {
+                return player;
+            },
+            version: function () {
+                return version;
+            },
+            addEventListener: function (event, listener) {
+                console.log("player " + player);
+                player.addEventListener(event, listener);
+                return this;
+            },
+            removeEventListener: function(event, listener) {
+                player.removeEventListener(event, listener);
+                return this;
             },
             collectStats: function () {
                 var currentTime = 0;
@@ -102,6 +138,7 @@
                     $('body').append('Interval: ' + item.time_from + ":" + item.time_to + '<br>');
                 });
             },
+
             showSlides: function () {
                 var currentTime;
                 var slideShow = [];
