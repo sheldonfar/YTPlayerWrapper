@@ -11,7 +11,7 @@ function injectPlayerTag(tag) {
     container.empty();
     var eventsPos = tag.indexOf('playerVars') - 1;
     var handlers =
-        ' onReady: function () {increaseEvent("onReady")},\n\
+        ' onReady: function () {player = window.ytp; increaseEvent("onReady")},\n\
             onPlay: function () {increaseEvent("onPlay")},\n\
             onPause: function () {increaseEvent("onPause")},\n\
             onEnd: function () {increaseEvent("onEnd")},\n\
@@ -24,9 +24,6 @@ function injectPlayerTag(tag) {
         ';
     tag = tag.slice(0, eventsPos) + handlers + tag.slice(eventsPos);
     container.append($(tag));
-    var playerTag = tag.substring(tag.indexOf('$("#YTPlayerContainer").YTPlayer({'), tag.indexOf('});') + 3);
-    jQuery.globalEval(playerTag);
-
     //
     //$(container).YTPlayer({
     //    width: 800,
@@ -46,7 +43,6 @@ function injectPlayerTag(tag) {
     //        }
     //    ]
     //});
-    player = window.ytp;
 }
 
 var API_EVENTS;

@@ -241,7 +241,6 @@
             },
             YTPlayer: function () {
                 var options = window.YTPlayerSettings || {};
-                console.log(JSON.stringify(options));
                 options.id = 'YTPlayerContainer';
                 options.width = options.width || 640;
                 options.height = options.height || 480;
