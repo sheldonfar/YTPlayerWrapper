@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stats page</title>
+    <script type="text/javascript" src="js/libs/jquery.min.js"></script>
+    <script type="text/javascript" src="js/libs/raphael-min.js"></script>
+    <script type="text/javascript" src="js/libs/morris.min.js"></script>
+    <script type="text/javascript" src="js/libs/easypiechart.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/stats.js"></script>
+    <link rel="stylesheet" href="css/libs/bootstrap.min.css">
+    <link rel="stylesheet" href="css/libs/font-awesome.min.css">
+    <link rel="stylesheet" href="css/libs/morris.css">
+    <link rel="stylesheet" href="css/stats-style.css">
+</head>
+<body>
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="fill">
+        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+
+            <li class="active">
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span>
+                    Dashboard</a>
+            </li>
+            <li>
+                <a href="sessions.html"><span class="fa-stack fa-lg pull-left"><i
+                        class="fa fa-cloud-download fa-stack-1x "></i></span>Sessions</a>
+            </li>
+            <li>
+                <a href="videos.html"> <span class="fa-stack fa-lg pull-left"><i
+                        class="fa fa-cart-plus fa-stack-1x "></i></span>Videos</a>
+            </li>
+        </ul>
+    </div>
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header fixed-brand">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
+                    <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                </button>
+                <a class="navbar-brand" id="menu-toggle-2" href="#"><i class="fa fa-bars"></i></a>
+            </div>
+        </nav>
+        <div class="container-fluid xyz">
+            <div class="row">
+                <div class="numbers">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="count_top">
+                                            <i class="fa fa-user-secret fa-5x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge total_sessions">26</div>
+                                        <div>Sessions</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="count_top">
+                                            <i class="fa fa-youtube-play fa-5x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge total_videos">26</div>
+                                        <div>Videos</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="count_top">
+                                            <i class="fa fa-clock-o fa-5x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge total_seconds_watched">26</div>
+                                        <div>Seconds Watched</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <span class="count_top">
+                                            <i class="fa fa-percent fa-5x"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge average_watched_percentage">26</div>
+                                        <div>Average Watched, %</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="x_panel x_panel_success">
+                            <div class="x_panel_content">
+                                <div id="line-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="x_panel x_panel_success">
+                            <div class="x_panel_content">
+                                <div id="bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="pie-chart">
+                        <div class="chart chrome-chart" data-percent="73">
+                            <span class="percent">1</span>
+                        </div>
+                        <p>Chrome</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="pie-chart">
+                        <div class="chart opera-chart" data-percent="1">
+                            <span class="percent">1</span>
+                        </div>
+                        <p>Opera</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="pie-chart">
+                        <div class="chart ie-chart" data-percent="1">
+                            <span class="percent">1</span>
+                        </div>
+                        <p>IE</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="pie-chart">
+                        <div class="chart firefox-chart" data-percent="1">
+                            <span class="percent">1</span>
+                        </div>
+                        <p>Firefox</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
