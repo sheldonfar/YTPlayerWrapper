@@ -4,6 +4,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="playerHandler.js"></script>
     <script src="playerGenerator.js"></script>
 </head>
 <body style="padding: 10px;">
@@ -12,7 +13,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Player</div>
             <div class="panel-body">
-                <div id="playerContainer" style="width: 480px; height: 270px; margin: 10px auto;"></div>
+                <div id="playerPlaceholder" style="min-width: 480px; min-height: 270px; margin: 10px auto;"></div>
             </div>
             <div id="btnPanel" class="panel-footer">
                 <div class="row">
@@ -46,56 +47,51 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6 text-left">
-                <div class="panel panel-default" id="videoInfo" style="margin-bottom: 0;">
-                    <div class="panel-heading">Video info</div>
-                    <div class="panel-body">
-                        <table class="table table-bordered" style="word-break: break-all;">
-                            <tbody>
-                            <tr>
-                                <th scope="row">Id:</th>
-                                <td class="videoId"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Title:</th>
-                                <td class="videoTitle"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Duration:</th>
-                                <td class="videoDuration"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Studio:</th>
-                                <td class="videoStudio"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Category:</th>
-                                <td class="videoCategory"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div class="panel panel-default">
+            <div class="panel-heading">Settings</div>
+            <div class="panel-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-2 col-md-2">
+                            <div class="form-group">
+                                <input type="text" id="playerWidth" class="form-control" placeholder="Width"
+                                       tabindex="1">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="playerHeight" class="form-control" placeholder="Height"
+                                       tabindex="2">
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-2">
+                            <div class="form-group">
+                                <input type="text" id="videoId" class="form-control" placeholder="Video Id"
+                                       tabindex="3">
+                            </div>
+                            <div class="form-group">
+                                <select id="theme" class="form-control" tabindex="4">
+                                    <option disabled="disabled">Theme</option>
+                                    <option>Dark</option>
+                                    <option>Light</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-2">
+                            <div class="form-group">
+                                <label><input type="checkbox" id="autoplay" tabindex="5"> Autoplay</label>
+                                <label><input type="checkbox" id="subtitles" tabindex="6"> Force subtitles</label>
+                                <label><input type="checkbox" id="annotations" tabindex="7"> Force annotations</label>
+                                <label><input type="checkbox" id="info" tabindex="8"> Show Info</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-2 col-md-2">
+                            <div class="form-group">
+                                <label><input type="checkbox" id="related" tabindex="9"> Show related videos</label>
+                                <label><input type="checkbox" id="hidelogo" tabindex="10"> Hide YT logo</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 text-left">
-                <div class="panel panel-default" id="playerInfo" style="margin-bottom: 0;">
-                    <div class="panel-heading">Player info</div>
-                    <div class="panel-body">
-                        <table class="table table-bordered">
-                            <tbody>
-                            <tr>
-                                <th scope="row">Version:</th>
-                                <td class="playerVersion"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Status:</th>
-                                <td class="playerStatus"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </form>
+                <button id="generate-button" class="form-control btn btn-success">Generate</button>
             </div>
         </div>
     </div>
@@ -111,10 +107,11 @@
         </div>
         <div class="panel panel-default" style="margin-bottom: 0;">
             <div class="panel-heading">Player Tag</div>
-            <textarea class="form-control" rows="7" id="txtPlayerTag"></textarea>
+            <textarea class="form-control" rows="10" id="txtPlayerTag"></textarea>
             <div class="panel-body">
             <span class="input-group-btn">
-                <button class="btn btn-default" id="injectPlayerTag" type="button">Inject Player Tag</button>
+                <button class="btn btn-default" id="btnCopy" type="button">Copy Player Tag</button>
+                <button class="btn btn-default pull-right" id="injectPlayerTag" type="button">Inject Player Tag</button>
             </span>
             </div>
         </div>

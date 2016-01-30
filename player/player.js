@@ -1,19 +1,30 @@
 (function (window, $) {
-    window.ytp = (function () {
+    window.ytp = window.ytp || (function () {
         var version = '0.0.1';
         var elementId, sessionId, videoOptions, player, playerState;
         var slides = [];
         var statsCollected = false;
         var seconds = [];
         var intervals = [];
+        var apiReady = false;
         return {
-            init: function (id, options) {
-                elementId = id;
+            isApiReady: function () {
+                return apiReady;
+            },
+            setVideoOptions: function (options) {
                 videoOptions = options;
+            },
+
+            setId: function (id) {
+                elementId = id;
+            },
+
+            init: function () {
                 sessionId = ytp.makeSessionId();
 
                 window.onYouTubeIframeAPIReady = (function () {
                     return function () {
+                        apiReady = true;
                         return ytp.initializeVideo();
                     };
                 })(this);
@@ -22,10 +33,12 @@
                 var firstScriptTag = document.getElementsByTagName('script')[0];
 
                 //window.onbeforeunload = ytp.beforeUnload();
-                return firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                return this;
             },
 
             initializeVideo: function () {
+                console.log(this.isApiReady());
                 player = new YT.Player(elementId, {
                     width: videoOptions.width,
                     height: videoOptions.height,
@@ -42,6 +55,7 @@
                         onError: videoOptions.onError
                     }
                 });
+                return this;
             },
             onPlayerStateChange: function (e) {
                 playerState = e.data;
@@ -138,12 +152,11 @@
                     $('body').append('Interval: ' + item.time_from + ":" + item.time_to + '<br>');
                 });
             },
-
             showSlides: function () {
                 var currentTime;
                 var slideShow = [];
 
-                videoOptions.slides.forEach(function (item, i) {
+                videoOptions.slides && videoOptions.slides.forEach(function (item, i) {
                     var from = item.from.split(':');
                     var to = item.to.split(':');
                     slides.push({
@@ -225,13 +238,13 @@
                 });
             }
         }
-    }());
+    })();
     $.prototype.YTPlayer = function (options) {
         this.id = $(this).attr('id');
         this.playerDiv = $(this);
         this.width = options.width || 640;
         this.height = options.height || 480;
-        this.playerSidebar = options.sidebar.css({
+        this.playerSidebar = options.sidebar && options.sidebar.css({
             'height': this.height,
             'width': this.width
         });
@@ -239,8 +252,14 @@
         this.playerVars = options.playerVars;
         this.slides = options.slides;
         this.onReady = options.onReady, this.onStateChange = options.onStateChange, this.onStart = options.onStart, this.onEnd = options.onEnd, this.onPlay = options.onPlay, this.onPause = options.onPause, this.onBuffer = options.onBuffer, this.onPlaybackQualityChange = options.onPlaybackQualityChange, this.onPlaybackRateChange = options.onPlaybackRateChange, this.onError = options.onError, this.onApiChange = options.onApiChange;
-
-        return ytp.init(this.id, this);
+        console.log("API READY? " + ytp.isApiReady());
+        ytp.setVideoOptions(this);
+        ytp.setId(this.id);
+        if(ytp.isApiReady()) {
+            return ytp.initializeVideo();
+        } else {
+            return ytp.init();
+        }
     };
 
 })(window, window.jQuery);
