@@ -28,6 +28,7 @@ body {
 .panel-body table tbody {
     display: table-row-group;
 }
+
 .container-fluid {
     padding-left: 25px;
 }
@@ -51,6 +52,7 @@ body {
     background-color: #FF7857;
     color: #fff;
 }
+
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -288,17 +290,17 @@ body {
     border-color: transparent #f0ad4e transparent transparent;
 }
 
-
 .x_panel_content {
     padding: 0 20px 10px;
 }
 
-html { height:100%; }
+html {
+    height: 100%;
+}
 
 .label {
     color: #2A3F54;
 }
-
 
 .chart {
     position: relative;
@@ -309,18 +311,21 @@ html { height:100%; }
     margin-bottom: 20px;
     text-align: center;
 }
+
 .chart canvas {
     position: absolute;
     top: 0;
     left: 0;
 }
+
 .percent {
     display: inline-block;
     line-height: 110px;
     z-index: 2;
 }
+
 .percent:after {
-    content:'%';
+    content: '%';
     margin-left: 0.1em;
     font-size: .8em;
 }

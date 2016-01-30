@@ -101,14 +101,14 @@ $(function () {
         url: browsersURL,
         success: function (data) {
             $.each(data, function (i, item) {
-                var percents = (item.count * 100 / item.total).toFixed(2)-0;
+                var percents = (item.count * 100 / item.total).toFixed(2) - 0;
                 $('.' + item.name.toLowerCase() + '-chart').attr("data-percent", percents);
                 $('.' + item.name.toLowerCase() + '-chart span').text(percents);
             });
             var colors = ['#F75554', '#F9CB7B', '#8BCFEB', '#95D171'];
-            $('.chart').each(function() {
-                var color = colors[Math.floor(Math.random()*colors.length)];
-                colors = jQuery.grep(colors, function(value) {
+            $('.chart').each(function () {
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                colors = jQuery.grep(colors, function (value) {
                     return value != color;
                 });
                 $(this).easyPieChart({

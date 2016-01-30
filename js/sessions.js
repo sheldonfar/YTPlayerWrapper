@@ -1,22 +1,22 @@
-$(function (){
+$(function () {
     var sessionURL = 'http://nodejs-ytapi.rhcloud.com/api/sessions';
 
 
     $.ajax({
         type: 'GET',
         url: sessionURL,
-        success: function(responseData) {
+        success: function (responseData) {
             var tableBody = $('#sessions-table').find('tbody');
-            $.each(responseData, function(i, item) {
+            $.each(responseData, function (i, item) {
                 var tableRow = '';
                 tableRow += '<tr><td>' + item.session_id + '</td><td>' + item.video_id + '</td><td>' + item.time_added + '</td><td>' + item.time_watched + '</td>';
                 var time_from = item.all_time_from.split(',');
                 var time_to = item.all_time_to.split(',');
                 tableRow += '<td>';
-                for(var j = 0; j < time_from.length; j++) {
+                for (var j = 0; j < time_from.length; j++) {
                     tableRow += time_from[j] + ' - ';
                     tableRow += time_to[j];
-                    j < time_from.length - 1? tableRow += ', ' : null;
+                    j < time_from.length - 1 ? tableRow += ', ' : null;
                 }
                 tableRow += '</td></tr>';
                 tableBody.append(tableRow);
@@ -27,7 +27,7 @@ $(function (){
         }
     });
 
-    $('button.searchSession').click(function() {
+    $('button.searchSession').click(function () {
 
         var session = $.trim($('#sessionIdInput').val());
         var apiKey = 'AIzaSyAh0r3GAU-hX6w62oLc2vrXGKyzelQQMhc';
@@ -38,24 +38,24 @@ $(function (){
             type: 'GET',
             url: sessionURL,
             data: {sessionId: session},
-            success: function(responseData) {
-                if(responseData.length > 0) {
+            success: function (responseData) {
+                if (responseData.length > 0) {
                     console.log(responseData);
-                    $.each(responseData, function(i, item) {
+                    $.each(responseData, function (i, item) {
                         $('span.session-id').html(item.session_id);
                         $('div.embed-responsive').html('<iframe class="embed-responsive-item" src="//www.youtube.com/embed/' + item.video_id + '"></iframe>');
                         video_id = item.video_id;
 
-                        if(i+1 == responseData.length) {
+                        if (i + 1 == responseData.length) {
                             watched_percentage = Math.round(item.time_watched / item.time_total * 100);
                         }
                     });
-                    $.get("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=" + video_id + "&key=" + apiKey, function(ytData) {
+                    $.get("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=" + video_id + "&key=" + apiKey, function (ytData) {
                         var date = new Date(ytData.items[0].snippet.publishedAt);
 
                         $('span.video-title').append(ytData.items[0].snippet.title);
                         $('span.video-publishedat').append(date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear());
-                        $('span.video-description').append(ytData.items[0].snippet.description.substr(0,110));
+                        $('span.video-description').append(ytData.items[0].snippet.description.substr(0, 110));
                         $('span.video-duration').append(ytData.items[0].contentDetails.duration);
                         $('span.video-viewcount').append(ytData.items[0].statistics.viewCount);
                         $('span.video-likecount').append(ytData.items[0].statistics.likeCount);

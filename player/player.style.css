@@ -24,10 +24,12 @@
     animation-name: lightSpeedIn;
     animation-timing-function: ease-out;
 }
+
 .animated {
     animation-duration: 1s;
     animation-fill-mode: both;
 }
+
 @keyframes zoomOutUp {
     40% {
         opacity: 1;

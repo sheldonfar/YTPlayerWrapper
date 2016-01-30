@@ -1,16 +1,8 @@
 (function (window, $) {
     var ytp = (function () {
-        var elementId;
-        var sessionId;
-        var videoOptions;
-        var player;
-
-        var fragments = [];
+        var elementId, sessionId, videoOptions, player, playerState;
         var slides = [];
-
-        var playerState;
         var statsCollected = false;
-
         var seconds = [];
         var intervals = [];
         return {
@@ -158,22 +150,22 @@
                 var url = 'http://127.0.0.1:8888/';//'http://nodejs-ytapi.rhcloud.com/';
 
                 var nAgt = navigator.userAgent;
-                var browserName  = navigator.appName;
-                var nameOffset,verOffset;
+                var browserName = navigator.appName;
+                var nameOffset, verOffset;
 
-                if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
+                if ((verOffset = nAgt.indexOf("Opera")) != -1) {
                     browserName = "Opera";
                 }
-                else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
+                else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
                     browserName = "IE";
                 }
-                else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
+                else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
                     browserName = "Chrome";
                 }
-                else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
+                else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
                     browserName = "Safari";
                 }
-                else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
+                else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
                     browserName = "Firefox";
                 }
                 var stats = {
