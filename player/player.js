@@ -20,8 +20,8 @@
             },
 
             init: function () {
+                console.log("init player");
                 sessionId = ytp.makeSessionId();
-
                 window.onYouTubeIframeAPIReady = (function () {
                     return function () {
                         apiReady = true;
@@ -39,6 +39,7 @@
 
             initializeVideo: function () {
                 console.log(this.isApiReady());
+                console.log(elementId);
                 player = new YT.Player(elementId, {
                     width: videoOptions.width,
                     height: videoOptions.height,
@@ -55,6 +56,7 @@
                         onError: videoOptions.onError
                     }
                 });
+                console.log("loaded");
                 return this;
             },
             onPlayerStateChange: function (e) {
@@ -236,30 +238,29 @@
                         $('body').append(" ERROR SENDING!");
                     }
                 });
+            },
+            YTPlayer: function () {
+                var options = window.YTPlayerSettings || {};
+                console.log(JSON.stringify(options));
+                options.id = 'YTPlayerContainer';
+                options.width = options.width || 640;
+                options.height = options.height || 480;
+                options.playerSidebar = options.sidebar && options.sidebar.css({
+                        'height': options.height,
+                        'width': options.width
+                    });
+                options.videoId = options.videoId || 'OPf0YbXqDm0';
+                options.playerVars = options.playerVars || {};
+                options.slides = options.slides | {};
+                console.log("API READY? " + ytp.isApiReady());
+                ytp.setVideoOptions(options);
+                ytp.setId(options.id);
+                if(ytp.isApiReady()) {
+                    return ytp.initializeVideo();
+                } else {
+                    return ytp.init();
+                }
             }
         }
     })();
-    $.prototype.YTPlayer = function (options) {
-        this.id = $(this).attr('id');
-        this.playerDiv = $(this);
-        this.width = options.width || 640;
-        this.height = options.height || 480;
-        this.playerSidebar = options.sidebar && options.sidebar.css({
-            'height': this.height,
-            'width': this.width
-        });
-        this.videoId = options.videoId || 'OPf0YbXqDm0';
-        this.playerVars = options.playerVars;
-        this.slides = options.slides;
-        this.onReady = options.onReady, this.onStateChange = options.onStateChange, this.onStart = options.onStart, this.onEnd = options.onEnd, this.onPlay = options.onPlay, this.onPause = options.onPause, this.onBuffer = options.onBuffer, this.onPlaybackQualityChange = options.onPlaybackQualityChange, this.onPlaybackRateChange = options.onPlaybackRateChange, this.onError = options.onError, this.onApiChange = options.onApiChange;
-        console.log("API READY? " + ytp.isApiReady());
-        ytp.setVideoOptions(this);
-        ytp.setId(this.id);
-        if(ytp.isApiReady()) {
-            return ytp.initializeVideo();
-        } else {
-            return ytp.init();
-        }
-    };
-
 })(window, window.jQuery);

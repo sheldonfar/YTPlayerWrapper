@@ -1,6 +1,20 @@
 if(!window.ytp) {
-    var tag = document.createElement('script');
-    tag.src = "player.js";
-    var lastScriptTag = document.getElementsByTagName('head')[0].lastChild;
-    lastScriptTag.parentNode.insertBefore(tag, lastScriptTag);
+    (function(){
+        if (!window.jQuery) {
+            var jqueryScript = document.createElement('script');
+            jqueryScript.type = 'text/javascript';
+            jqueryScript.src = 'https://code.jquery.com/jquery-2.2.0.min.js';
+            (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(jqueryScript);
+        }
+
+        var playerScript = document.createElement('script');
+        playerScript.type = 'text/javascript';
+        playerScript.onload = function() {
+            ytp.YTPlayer();
+        };
+        playerScript.src = 'http://sheldonfar.com/ytapi/player/player.js';
+        (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(playerScript);
+    })();
+} else {
+    ytp.YTPlayer();
 }

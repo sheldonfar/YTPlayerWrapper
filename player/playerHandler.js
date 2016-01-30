@@ -6,7 +6,6 @@ function teardown() {
     $('#events li .badge').html('0').css('background-color', '#777');
     events = [];
 }
-
 function injectPlayerTag(tag) {
     var container = $('#playerPlaceholder');
     container.empty();
@@ -26,6 +25,7 @@ function injectPlayerTag(tag) {
     tag = tag.slice(0, eventsPos) + handlers + tag.slice(eventsPos);
     container.append($(tag));
     var playerTag = tag.substring(tag.indexOf('$("#YTPlayerContainer").YTPlayer({'), tag.indexOf('});') + 3);
+    jQuery.globalEval(playerTag);
 
     //
     //$(container).YTPlayer({
@@ -136,11 +136,7 @@ function bindEvents() {
     });
 }
 
-function setPlayerTagArea() {
-    $('#txtPlayerTag').text('<script src="player.js"></script>\n<div id="playerContainer"><div class="ytplayer">\n</div></div>')
-}
 $(document).ready(function () {
     bindEvents();
     initAPIEventsList();
-    setPlayerTagArea();
 });

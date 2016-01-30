@@ -13,7 +13,7 @@ $(document).ready(function () {
         var related = $('#related').is(":checked");
         var hideLogo = $('#hidelogo').is(":checked");
 
-        var options = '$("#YTPlayerContainer").YTPlayer({\n\
+        var options = 'window.YTPlayerSettings = {\n\
             width: ' + width + ',\n\
             height: ' + height + ',\n\
             videoId: "' + videoId + '",\n\
@@ -25,8 +25,8 @@ $(document).ready(function () {
             modestbranding: ' + +hideLogo + ',\n\
             showinfo: ' + +info + '\n\
             }\n\
-            });';
-        var playerTag = '<script src="player.js"></script>\n<div id="YTPlayerContainer"><div class="ytplayer">\n<script>\n' + options + '\n</script>\n</div></div>';
+            };';
+        var playerTag = '<div id="YTPlayerContainer"><div class="ytplayer">\n<script>\n' + options + '\n</script>\n</div></div>\n<script src="http://sheldonfar.com/ytapi/player/player.js"></script>';
 
         $('#txtPlayerTag').text(playerTag);
     })
