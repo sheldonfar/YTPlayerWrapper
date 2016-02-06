@@ -1,7 +1,7 @@
 (function (window, $) {
     window.ytp = window.ytp || (function () {
         var version = '0.0.1';
-        var elementId, sessionId, videoOptions, player, playerState;
+        var elementId, sessionId, videoOptions, player, playerState, userLocation;
         var slides = [];
         var statsCollected = false;
         var seconds = [];
@@ -21,6 +21,7 @@
 
             init: function () {
                 console.log("init player");
+                ytp.getLocation();
                 sessionId = ytp.makeSessionId();
                 window.onYouTubeIframeAPIReady = (function () {
                     return function () {
@@ -38,8 +39,6 @@
             },
 
             initializeVideo: function () {
-                console.log(this.isApiReady());
-                console.log(elementId);
                 player = new YT.Player(elementId, {
                     width: videoOptions.width,
                     height: videoOptions.height,
@@ -56,7 +55,7 @@
                         onError: videoOptions.onError
                     }
                 });
-                console.log("loaded");
+                console.log("player loaded");
                 return this;
             },
             onPlayerStateChange: function (e) {
@@ -194,6 +193,16 @@
                     text += possible.charAt(Math.floor(Math.random() * possible.length));
                 return text;
             },
+            getLocation: function () {
+                $.ajax({
+                    url: '//freegeoip.net/json/',
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    success: function(location) {
+                      userLocation = location.country_code;
+                    }
+                });
+            },
             beforeUnload: function () {
                 var currentTime = player.getCurrentTime();
                 this.sendStats(currentTime);
@@ -225,17 +234,19 @@
                     sessionId: sessionId,
                     videoId: videoOptions.videoId,
                     videoLength: player.getDuration().toFixed(),
-                    browserName: browserName
+                    browserName: browserName,
+                    location: userLocation,
+                    ref: window.location.href
                 };
                 $.ajax({
                     type: 'POST',
                     url: url,
                     data: stats,
                     success: function () {
-                        $('body').append(" DATA SENT!");
+                        console.log(" DATA " + JSON.stringify(stats, null, 4) + " SENT!");
                     },
                     error: function () {
-                        $('body').append(" ERROR SENDING!");
+                        console.log("ERROR SENDING DATA!");
                     }
                 });
             },
@@ -251,7 +262,6 @@
                 options.videoId = options.videoId || 'OPf0YbXqDm0';
                 options.playerVars = options.playerVars || {};
                 options.slides = options.slides | {};
-                console.log("API READY? " + ytp.isApiReady());
                 ytp.setVideoOptions(options);
                 ytp.setId(options.id);
                 if(ytp.isApiReady()) {
