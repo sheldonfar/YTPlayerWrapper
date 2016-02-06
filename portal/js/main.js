@@ -12,7 +12,6 @@ $(function () {
     function initMenu() {
         $('#menu ul').hide();
         $('#menu ul').children('.current').parent().show();
-        //$('#menu ul:first').show();
         $('#menu li a').click(
             function () {
                 var checkElement = $(this).next();

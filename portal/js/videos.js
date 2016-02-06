@@ -48,8 +48,6 @@ $(function () {
                 } else {
                     alert("An error occured processing your request");
                 }
-
-
             }
         });
 
