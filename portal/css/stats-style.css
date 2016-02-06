@@ -1,11 +1,14 @@
 body {
     color: #73879C;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    background-color: #ECF0F1;
     font-size: 13px;
     font-weight: 400;
     line-height: 1.471;
 }
-
+.padding-div {
+    padding: 15px;
+}
 .huge {
     font-size: 40px;
 }
@@ -16,21 +19,17 @@ body {
     height: 65px;
     border-left: 2px solid #ADB2B5;
 }
-
+.margin {
+    margin-left:10px;
+    margin-right:10px;
+}
 .right {
     padding-left: 10px;
 }
 
-.panel-body table tr {
-    display: table-row;
-}
-
-.panel-body table tbody {
-    display: table-row-group;
-}
-
 .container-fluid {
-    padding-left: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .panel-green {
@@ -338,4 +337,8 @@ html {
     -moz-border-radius: 4px;
     border-radius: 4px;
     border: 1px solid #ededed;
+}
+
+#videos-table {
+    margin-top: 15px;
 }

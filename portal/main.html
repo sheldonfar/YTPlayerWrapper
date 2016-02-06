@@ -1,0 +1,130 @@
+<div class="container-fluid xyz">
+    <div class="row">
+        <div class="row">
+            <div class="numbers">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-blue">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                <span class="count_top">
+                                    <i class="fa fa-user-secret fa-5x"></i>
+                                </span>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge total_sessions">{{sessions.count}}</div>
+                                    <div>Sessions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                <span class="count_top">
+                                    <i class="fa fa-youtube-play fa-5x"></i>
+                                </span>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge total_videos">{{videos.count}}</div>
+                                    <div>Videos</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                <span class="count_top">
+                                    <i class="fa fa-clock-o fa-5x"></i>
+                                </span>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge total_time_watched">{{time_watched.count | secondsToDateTime |
+                                        date:'HH:mm:ss'}}
+                                    </div>
+                                    <div>Hours Watched</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                <span class="count_top">
+                                    <i class="fa fa-percent fa-5x"></i>
+                                </span>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge average_watched_percentage">{{watched_percentage.count}}</div>
+                                    <div>Average Watched, %</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="big-charts" ng-controller="ChartsController as charts">
+            <div class="row">
+                <div class=" col-md-6">
+                    <div class="panel panel-default padding-div" id="views-chart"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default padding-div" id="seconds-chart"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="panel panel-default padding-div" id="ref-chart"></div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="panel panel-default padding-div" id="geo-chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <div class="pie-chart">
+                    <div class="chart chrome-chart" data-percent="73">
+                        <span class="percent">1</span>
+                    </div>
+                    <p>Chrome</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="pie-chart">
+                    <div class="chart opera-chart" data-percent="1">
+                        <span class="percent">1</span>
+                    </div>
+                    <p>Opera</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="pie-chart">
+                    <div class="chart ie-chart" data-percent="1">
+                        <span class="percent">1</span>
+                    </div>
+                    <p>IE</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="pie-chart">
+                    <div class="chart firefox-chart" data-percent="1">
+                        <span class="percent">1</span>
+                    </div>
+                    <p>Firefox</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
