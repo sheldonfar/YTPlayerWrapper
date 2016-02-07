@@ -1,63 +1,66 @@
-<div id="page-content-wrapper" ng-controller="VideoController as video">
-    <div class="container-fluid xyz">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label for="videoIdInput">Video ID</label>
-                    <input type="text" class="form-control" id="videoIdInput" placeholder="Video id" ng-model="videoId">
+<div class="container-fluid xyz" ng-controller="VideoController as video">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="videoIdInput">Video ID</label>
+                <input type="text" class="form-control" id="videoIdInput" placeholder="Video id or link" ng-model="videoId">
+            </div>
+            <button class="searchVideo btn btn-default" ng-click="video.getVideoData(videoId)">Get Data!</button>
+
+            <table class="table table-bordered table-hover table-responsive" id="videos-table">
+                <thead>
+                <tr>
+                    <th>Video ID</th>
+                    <th>Date</th>
+                    <th>Total time watched</th>
+                    <th>Watched intervals</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="video in videos">
+                    <td>{{ video.video_id }}</td>
+                    <td>{{ video.time_added }}</td>
+                    <td>{{ video.watched }}</td>
+                    <td>{{ video.watched }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="video-row row" ng-show="searchVideo.loaded">
+                <div class="col-md-4 no-padding">
+                    <div>
+                        <h3>Video #<span class="video-id">{{searchVideo.videoId}}</span></h3>
+                    </div>
+                    <div class="embed-responsive embed-responsive-16by9" >
+                        <div data-ng-bind-html="searchVideo.embedCode"></div>
+                    </div>
+                    <span class="video-info video-title"><strong>Title: </strong>{{searchVideo.title}}</span>
+                    <span class="video-info video-publishedat"><strong>Published At: </strong>{{searchVideo.publishedAt}}</span>
+                    <span class="video-info video-description"><strong>Description: </strong>{{searchVideo.description}}</span>
+                    <span class="video-info video-duration"><strong>Duration: </strong>{{searchVideo.duration}}</span>
+                    <span class="video-info video-viewcount"><strong>View
+                        Count: </strong>{{searchVideo.viewCount}}</span>
+                    <span class="video-info video-likecount"><strong>Like
+                        Count: </strong>{{searchVideo.likeCount}}</span>
+                    <span class="video-info video-dislikecount"><strong>Dislike Count: </strong>{{searchVideo.dislikeCount}}</span>
+                    <span class="video-info video-favoritecount"><strong>Favorite Count: </strong>{{searchVideo.favoriteCount}}</span>
+                    <span class="video-info video-commentcount"><strong>Comment Count: </strong>{{searchVideo.commentCount}}</span>
                 </div>
-                <button class="searchVideo btn btn-default" ng-click="video.getVideoData(videoId)">Get Data!</button>
-                <table class="table table-bordered table-hover table-responsive" id="videos-table">
-                    <thead>
-                    <tr>
-                        <th>Video ID</th>
-                        <th>Date</th>
-                        <th>Total time watched</th>
-                        <th>Watched intervals</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="video in videos">
-                        <td>{{ video.video_id }}</td>
-                        <td>{{ video.time_added }}</td>
-                        <td>{{ video.watched }}</td>
-                        <td>{{ video.watched }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="video-row row" ng-show="searchVideo.loaded">
-                    <div class="col-md-4 no-padding">
-                        <div>
-                            <h3>Video #<span class="video-id">{{searchVideo.videoId}}</span></h3>
-                        </div>
-                        <div class="embed-responsive embed-responsive-16by9"></div>
-                        <span class="video-info video-title"><strong>Title: </strong>{{searchVideo.title}}</span>
-                        <span class="video-info video-publishedat"><strong>Published At: </strong>{{searchVideo.publishedAt}}</span>
-                        <span class="video-info video-description"><strong>Description: </strong>{{searchVideo.description}}</span>
-                        <span class="video-info video-duration"><strong>Duration: </strong>{{searchVideo.duration}}</span>
-                        <span class="video-info video-viewcount"><strong>View Count: </strong>{{searchVideo.viewCount}}</span>
-                        <span class="video-info video-likecount"><strong>Like Count: </strong>{{searchVideo.likeCount}}</span>
-                        <span class="video-info video-dislikecount"><strong>Dislike Count: </strong>{{searchVideo.dislikeCount}}</span>
-                        <span class="video-info video-favoritecount"><strong>Favorite Count: </strong>{{searchVideo.favoriteCount}}</span>
-                        <span class="video-info video-commentcount"><strong>Comment Count: </strong>{{searchVideo.commentCount}}</span>
-                    </div>
-                    <div class="col-md-8">
-                        <h2 class="text-center">Associated Sessions</h2>
-                        <table class="table table-bordered table-hover table-sessions" id="table-sessions">
-                            <thead>
-                            <tr>
-                                <th>Session ID</th>
-                                <th>Time Intervals</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="session in searchVideo.sessions">
-                                <td>{{ session.sessionId }}</td>
-                                <td><span ng-repeat="time in session.fragments">{{time}}</span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-md-8">
+                    <h2 class="text-center">Associated Sessions</h2>
+                    <table class="table table-bordered table-hover table-sessions" id="table-sessions">
+                        <thead>
+                        <tr>
+                            <th>Session ID</th>
+                            <th>Time Intervals</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="session in searchVideo.sessions">
+                            <td>{{ session.sessionId }}</td>
+                            <td><span ng-repeat="time in session.fragments">{{time}}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

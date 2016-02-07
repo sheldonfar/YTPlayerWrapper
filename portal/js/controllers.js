@@ -1,5 +1,7 @@
 (function () {
-    var portalControllers = angular.module('portalControllers', []);
+    var portalControllers = angular.module('portalControllers', [
+        'ngNotify'
+    ]);
 
     portalControllers.controller('MainController', function (config, $scope, $http) {
         $http({method: 'GET', url: config.serverUrls.countsUrl}).success(function (data) {
@@ -10,7 +12,7 @@
         });
     });
 
-    portalControllers.controller('VideoController', function (config, $scope, $http) {
+    portalControllers.controller('VideoController', function (config, $scope, $http, $sce, ngNotify) {
         var apiKey = 'AIzaSyAh0r3GAU-hX6w62oLc2vrXGKyzelQQMhc';
 
         $http({method: 'GET', url: config.serverUrls.videosUrl}).success(function (data) {
@@ -20,7 +22,22 @@
                 "bLengthChange": false
             });
         });
+
+        ngNotify.config({
+            theme: 'pure',
+            position: 'bottom',
+            duration: 2000
+        });
+
         this.getVideoData = function (id) {
+            if(!id) {
+                ngNotify.set('Video id is empty!', 'warn');
+            }
+            var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            var match = id.match(regExp);
+            if (match && match[2].length == 11) {
+                id = match[2];
+            }
             $scope.searchVideo = {videoId: id, loaded: false};
             $http({
                 method: 'GET',
@@ -28,7 +45,7 @@
                 url: config.serverUrls.specificVideoUrl
             }).success(function (data) {
                 if (data.length > 0) {
-                    $('div.embed-responsive').html('<iframe class="embed-responsive-item" src="//www.youtube.com/embed/' + id + '"></iframe>');
+                    $scope.searchVideo.embedCode =  $sce.trustAsHtml('<iframe class="embed-responsive-item" src="//www.youtube.com/embed/' + id + '"></iframe>');
                     $scope.searchVideo.sessions = [];
                     $.each(data, function (i, item) {
                         $scope.searchVideo.sessions[i] = {sessionId: item.session_id, fragments: []};
@@ -42,7 +59,7 @@
                     });
                     $scope.loadYouTubePlayer();
                 } else {
-                    alert("An error occured processing your request");
+                    ngNotify.set('Unable to find video! :(', 'error');
                 }
             });
         };
@@ -64,6 +81,7 @@
                 $scope.searchVideo.commentCount = ytData.items[0].statistics.commentCount;
                 $scope.searchVideo.loaded = true;
             });
+            ngNotify.set('Video found! :)', 'success');
         };
 
 
