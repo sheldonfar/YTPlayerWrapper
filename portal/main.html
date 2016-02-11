@@ -1,6 +1,6 @@
-<div class="container-fluid xyz" ng-controller="MainController as main">
+<div class="container-fluid xyz">
     <div class="row">
-        <div class="row">
+        <div class="row" ng-controller="MainController as main">
             <div class="numbers">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-blue">
@@ -46,8 +46,7 @@
                                 </span>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge total_time_watched">{{time_watched.count | secondsToDateTime |
-                                        date:'HH:mm:ss'}}
+                                    <div class="huge total_time_watched">{{time_watched.count | secondsToDateTime | date:'HH:mm:ss'}}
                                     </div>
                                     <div>Hours Watched</div>
                                 </div>
@@ -74,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div id="big-charts" ng-controller="ChartsController as charts">
+        <div id="big-charts" ng-controller="ChartController as chart">
             <div class="row">
                 <div class=" col-md-6">
                     <div class="panel panel-default padding-div" id="views-chart"></div>
