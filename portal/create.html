@@ -1,0 +1,117 @@
+<script src="js/playerHandler.js"></script>
+<script src="js/playerGenerator.js"></script>
+<div class="container-fluid xyz" ng-controller="CreatePlayerController as create">
+    <div class="row">
+        <div class="col-md-8" style="">
+            <div class="panel panel-default">
+                <div class="panel-heading">Player</div>
+                <div class="panel-body">
+                    <div id="playerPlaceholder" style="min-width: 480px; min-height: 270px; margin: 10px auto;"></div>
+                </div>
+                <div id="btnPanel" class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button type="button" id="btnPlay" class="btn btn-default">
+                                <span class="glyphicon glyphicon-play-circle"></span>Play
+                            </button>
+                            <button type="button" id="btnPause" class="btn btn-default">
+                                <span class="glyphicon glyphicon glyphicon-pause"></span>Pause
+                            </button>
+                            <button type="button" id="btnMute" class="btn btn-default">
+                                <span class="glyphicon glyphicon-volume-off"></span>Mute
+                            </button>
+                        </div>
+                        <div class="col-xs-3 text-center" style="float: right;">
+                            <div class="input-group">
+                                <input type="text" id="txtSeek" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" id="btnSeek" type="button">Seek</button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 text-center" style="float: right;">
+                            <div class="input-group">
+                                <input type="text" id="txtVolume" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" id="btnVolume" type="button">Volume</button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Settings</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <input type="text" id="playerWidth" class="form-control" placeholder="Width"
+                                           tabindex="1">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="playerHeight" class="form-control" placeholder="Height"
+                                           tabindex="2">
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <input type="text" id="videoId" class="form-control" placeholder="Video Id"
+                                           tabindex="3">
+                                </div>
+                                <div class="form-group">
+                                    <select id="theme" class="form-control" tabindex="4">
+                                        <option disabled="disabled">Theme</option>
+                                        <option>Dark</option>
+                                        <option>Light</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <label><input type="checkbox" id="autoplay" tabindex="5"> Autoplay</label>
+                                    <label><input type="checkbox" id="subtitles" tabindex="6"> Force subtitles</label>
+                                    <label><input type="checkbox" id="annotations" tabindex="7"> Force
+                                        annotations</label>
+                                    <label><input type="checkbox" id="info" tabindex="8"> Show Info</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <label><input type="checkbox" id="related" tabindex="9"> Show related videos</label>
+                                    <label><input type="checkbox" id="hidelogo" tabindex="10"> Hide YT logo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <button id="generate-button" class="form-control btn btn-success">Generate</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Events</div>
+                <div class="panel-body" style="padding-bottom: 0;">
+                    <div id="events" style='display: block;'>
+                        <ul id="lsApiEvents" class="list-group">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" style="margin-bottom: 0;">
+                <div class="panel-heading">Player Tag</div>
+                <div class="panel-body">
+                    <textarea class="form-control" rows="10" id="txtPlayerTag"></textarea>
+                </div>
+                <div class="panel-footer">
+                    <span>
+                        <button class="btn btn-default" id="btnCopy" type="button">Copy Player Tag</button>
+                        <button class="btn btn-default pull-right" id="injectPlayerTag" type="button">Inject Player Tag</button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

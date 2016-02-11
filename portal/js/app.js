@@ -9,6 +9,9 @@
             $routeProvider.when('/videos', {
                 templateUrl: 'videos.html',
                 controller: 'VideoController'
+            }).when('/create', {
+                templateUrl: 'create.html',
+                controller: 'CreatePlayerController'
             }).when('/', {
                 templateUrl: 'main.html',
                 controller: 'MainController'

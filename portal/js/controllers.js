@@ -12,6 +12,10 @@
         });
     });
 
+    portalControllers.controller('CreatePlayerController', function (config, $scope, $http) {
+
+    });
+
     portalControllers.controller('VideoController', function (config, $scope, $http, $sce, ngNotify) {
         var apiKey = 'AIzaSyAh0r3GAU-hX6w62oLc2vrXGKyzelQQMhc';
 

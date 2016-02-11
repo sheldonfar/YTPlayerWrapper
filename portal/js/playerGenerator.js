@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function () {
     $('#generate-button').on('click touchstart', function () {
         var width = $('#playerWidth').val() || 640;

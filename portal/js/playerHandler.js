@@ -24,25 +24,6 @@ function injectPlayerTag(tag) {
         ';
     tag = tag.slice(0, eventsPos) + handlers + tag.slice(eventsPos);
     container.append($(tag));
-    //
-    //$(container).YTPlayer({
-    //    width: 800,
-    //    //height: 560,
-    //    videoId: 'OPf0YbXqDm0',
-    //    sidebar: $('.player-sidebar'),
-    //    slides: [
-    //        {
-    //            from: '00:00:03',
-    //            to: '00:00:07',
-    //            content: "<h2>This is a slide from 00:00:03 to 00:00:07!</h2>"
-    //        },
-    //        {
-    //            from: '00:00:08',
-    //            to: '00:00:15',
-    //            content: "<h2>This is a slide from 00:00:08 to 00:00:15!</h2>"
-    //        }
-    //    ]
-    //});
 }
 
 var API_EVENTS;
