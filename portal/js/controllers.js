@@ -29,8 +29,9 @@
 
         ngNotify.config({
             theme: 'pure',
-            position: 'bottom',
-            duration: 2000
+            position: 'top',
+            button: true,
+            duration: 3000
         });
 
         this.getVideoData = function (id) {
@@ -63,7 +64,11 @@
                     });
                     $scope.loadYouTubePlayer();
                 } else {
-                    ngNotify.set('Unable to find video! :(', 'error');
+                    $scope.videoNotFound = true;
+                    ngNotify.set('Video not found. Maybe <a href="#create?id=' + id + '">Create a player for it</a> instead?', {
+                        html: true,
+                        type: 'error'
+                    });
                 }
             });
         };
