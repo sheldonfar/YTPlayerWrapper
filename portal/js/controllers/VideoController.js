@@ -19,6 +19,12 @@
                 });
             });
 
+            var id = getParameterByName('id');
+            if(id) {
+                $scope.id = id;
+                this.getVideoData(id);
+            }
+
             ngNotify.config({
                 theme: 'pure',
                 position: 'top',
@@ -80,8 +86,10 @@
                     $scope.searchVideo.dislikeCount = ytData.items[0].statistics.dislikeCount;
                     $scope.searchVideo.favoriteCount = ytData.items[0].statistics.favoriteCount;
                     $scope.searchVideo.commentCount = ytData.items[0].statistics.commentCount;
-                    $scope.searchVideo.loaded = true;
+                }).error(function () {
+
                 });
+                $scope.searchVideo.loaded = true;
                 ngNotify.set('Video found! :)', 'success');
             };
         }])

@@ -1,7 +1,7 @@
 (function () {
+    var serverUrl = getParameterByName('prod')? 'http://nodejs-ytapi.rhcloud.com/api/' : 'http://127.0.0.1:8888/api/';
 
     angular.module('portal.main', ['ngRoute', 'portal.video'])
-
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/', {
                 templateUrl: 'main.html',
@@ -12,11 +12,11 @@
             appName: 'YouTube Wrapper Portal',
             appVersion: '0.0.1',
             serverUrls: {
-                serverUrl: 'http://nodejs-ytapi.rhcloud.com/api/',
-                countsUrl: 'http://nodejs-ytapi.rhcloud.com/api/counts',
-                browsersUrl: 'http://nodejs-ytapi.rhcloud.com/api/browsers',
-                videosUrl: 'http://nodejs-ytapi.rhcloud.com/api/videos',
-                specificVideoUrl: 'http://nodejs-ytapi.rhcloud.com/api/videos/video'
+                serverUrl: serverUrl,
+                countsUrl: serverUrl + 'counts',
+                browsersUrl: serverUrl + 'browsers',
+                videosUrl: serverUrl + 'videos',
+                specificVideoUrl: serverUrl + 'videos/video'
             }
         })
         .controller('MainController', ["config", "$scope", "$http", function (config, $scope, $http) {
@@ -25,10 +25,24 @@
                 $scope.videos = {count: data[0].video_count};
                 $scope.time_watched = {count: data[0].time_watched};
                 $scope.watched_percentage = {count: (data[0].time_watched / data[0].total_time * 100).toFixed(2)};
+            }).error(function () {
+                console.log("No connection");
+            });
+
+            $http({method: 'GET', url: config.serverUrls.videosUrl}).success(function (data) {
+                //TODO: Limit to top5 by views
+                $scope.topVideos = data;
+                $scope.topVideosLoaded = true;
+            }).error(function () {
+                console.log("No connection");
             });
         }])
         .controller('ChartController', ["config", "$scope", "$http", function (config, $scope, $http) {
-            google.load('visualization', '1.1', {'packages': ['bar', 'corechart'], 'callback': drawCharts});
+            if(google) {
+                google.load('visualization', '1.1', {'packages': ['bar', 'corechart'], 'callback': drawCharts});
+            } else {
+                console.log("Google charts not loaded");
+            }
 
             function drawCharts() {
                 drawBarChart('views');

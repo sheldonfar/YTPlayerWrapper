@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <label for="videoIdInput">Video ID</label>
-                <input type="text" class="form-control" id="videoIdInput" placeholder="Video id or link" ng-model="videoId">
+                <input type="text" class="form-control" id="videoIdInput" ng-value="id" placeholder="Video id or link" ng-model="videoId">
             </div>
             <button class="searchVideo btn btn-default" ng-click="video.getVideoData(videoId)">Get Data!</button>
 

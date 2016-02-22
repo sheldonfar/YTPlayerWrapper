@@ -3,7 +3,8 @@
         'ngRoute',
         'portal.main',
         'portal.video',
-        'portal.create'
+        'portal.create',
+        'portal.about'
     ]);
 
     app.config(['$routeProvider', function ($routeProvider) {

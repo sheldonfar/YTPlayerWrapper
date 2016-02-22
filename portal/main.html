@@ -46,7 +46,8 @@
                                 </span>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge total_time_watched">{{time_watched.count | secondsToDateTime | date:'HH:mm:ss'}}
+                                    <div class="huge total_time_watched">{{time_watched.count | secondsToDateTime |
+                                        date:'HH:mm:ss'}}
                                     </div>
                                     <div>Hours Watched</div>
                                 </div>
@@ -88,6 +89,30 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="panel panel-default padding-div" id="geo-chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="topVideosLoaded">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">Top 5 videos</div>
+                    <table class="table table-responsive table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Video Id</th>
+                                <th>Views</th>
+                                <th>Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="video in topVideos">
+                                <td><a ng-href="#/videos?id={{video.video_id}}">{{video.video_id}}</a></td>
+                                <td>{{ video.times_watched }}</td>
+                                <td>{{ video.time_added }}</td>
+                                <td><button class="btn btn-default"><a ng-href="#/create?id={{video.video_id}}">Instant Player</a></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
