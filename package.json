@@ -1,0 +1,22 @@
+{
+  "name": "youtube-player-wrapper",
+  "version": "0.0.1",
+  "description": "A wrapper for the youtube player to process some statistics",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sheldonfar/YTPlayerWrapper.git"
+  },
+  "keywords": [
+    "youtube"
+  ],
+  "author": "Yevhenii Minin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sheldonfar/YTPlayerWrapper/issues"
+  },
+  "homepage": "https://github.com/sheldonfar/YTPlayerWrapper#readme"
+}
