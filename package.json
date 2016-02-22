@@ -2,21 +2,21 @@
   "name": "youtube-player-wrapper",
   "version": "0.0.1",
   "description": "A wrapper for the youtube player to process some statistics",
-  "main": "index.js",
   "scripts": {
-    "test": "test"
-  },
+  "test": "test"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sheldonfar/YTPlayerWrapper.git"
   },
-  "keywords": [
-    "youtube"
-  ],
   "author": "Yevhenii Minin",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sheldonfar/YTPlayerWrapper/issues"
-  },
-  "homepage": "https://github.com/sheldonfar/YTPlayerWrapper#readme"
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-ftp-deploy": "~0.1.10",
+    "grunt-contrib-clean": "~0.7.0"
+  }
 }
