@@ -1,6 +1,6 @@
 (function (window, $) {
     window.ytp = window.ytp || (function () {
-            var version = '0.0.1';
+            var version = '0.0.2';
             var elementId, sessionId, videoOptions, player, playerState, userLocation;
             var slides = [];
             var statsCollected = false;
