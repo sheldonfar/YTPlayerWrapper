@@ -64,6 +64,7 @@
                     switch (e.data) {
                         case 0:
                             typeof videoOptions.onEnd === "function" ? videoOptions.onEnd(e) : void 0;
+                            ytp.buildIntervals();
                             break;
                         case 1:
                             typeof videoOptions.onPlay === "function" ? videoOptions.onPlay(e) : void 0;
@@ -77,6 +78,7 @@
                             break;
                         case 3:
                             typeof videoOptions.onBuffer === "function" ? videoOptions.onBuffer(e) : void 0;
+                            ytp.buildIntervals();
                             break;
                     }
                 },
@@ -116,25 +118,24 @@
                     return this;
                 },
                 collectStats: function () {
-                    var currentTime = 0;
-                    var currentSecond = 0;
-                    var checkFragments = [];
-
+                    var currentTime = 0, currentSecond = 0;
                     statsCollected = true;
 
                     window.setInterval(function () {
                         currentTime = player.getCurrentTime();
                         if (playerState == 1) {
-                            currentSecond = currentTime.toFixed();
+                            currentSecond = parseInt(currentTime.toFixed());
                             seconds.push(currentSecond);
-                            //$('body').append('<br>Second:' + currentSecond + " watched");
+                            console.log('Second:' + currentSecond + " watched");
                         }
                     }, 1000);
                 },
                 buildIntervals: function () {
                     intervals = [];
-                    var begin = seconds[0];
-                    var end;
+                    seconds = seconds.sort(function (a,b) {
+                        return a - b;
+                    });
+                    var begin = seconds[0], end;
                     for (var i = 0; i < seconds.length; i++) {
                         if (seconds[i - 1] && seconds[i] - seconds[i - 1] > 1) {
                             end = seconds[i - 1];

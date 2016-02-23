@@ -20,7 +20,7 @@
             });
 
             var id = getParameterByName('id');
-            if(id) {
+            if (id) {
                 $scope.id = id;
                 this.getVideoData(id);
             }
@@ -33,7 +33,7 @@
             });
 
             this.getVideoData = function (id) {
-                if(!id) {
+                if (!id) {
                     ngNotify.set('Video id is empty!', 'warn');
                 }
                 var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -45,10 +45,10 @@
                 $http({
                     method: 'GET',
                     params: {videoId: id},
-                    url: config.serverUrls.specificVideoUrl
+                    url: config.serverUrls.specificVideoUrl + id
                 }).success(function (data) {
                     if (data.length > 0) {
-                        $scope.searchVideo.embedCode =  $sce.trustAsHtml('<iframe class="embed-responsive-item" src="//www.youtube.com/embed/' + id + '"></iframe>');
+                        $scope.searchVideo.embedCode = $sce.trustAsHtml('<iframe class="embed-responsive-item" src="//www.youtube.com/embed/' + id + '"></iframe>');
                         $scope.searchVideo.sessions = [];
                         $.each(data, function (i, item) {
                             $scope.searchVideo.sessions[i] = {sessionId: item.session_id, fragments: []};
@@ -87,7 +87,6 @@
                     $scope.searchVideo.favoriteCount = ytData.items[0].statistics.favoriteCount;
                     $scope.searchVideo.commentCount = ytData.items[0].statistics.commentCount;
                 }).error(function () {
-
                 });
                 $scope.searchVideo.loaded = true;
                 ngNotify.set('Video found! :)', 'success');

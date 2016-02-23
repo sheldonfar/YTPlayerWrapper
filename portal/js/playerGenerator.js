@@ -23,7 +23,7 @@ $(document).ready(function () {
             showinfo: ' + +info + '\n\
             }\n\
             };';
-        var playerTag = '<div id="YTPlayerContainer"><div class="ytplayer">\n<script>\n' + options + '\n</script>\n</div></div>\n<script src="http://sheldonfar.com/ytapi/player/delivery.js"></script>';
+        var playerTag = '<div id="YTPlayerContainer"><div class="ytplayer">\n<script>\n' + options + '\n</script>\n</div></div>\n<script src="http://sheldonfar.com/ytplayer/producer.min.js"></script>';
 
         $('#txtPlayerTag').text(playerTag);
     }).click();

@@ -1,5 +1,5 @@
 (function () {
-    var serverUrl = getParameterByName('prod')? 'http://nodejs-ytapi.rhcloud.com/api/' : 'http://127.0.0.1:8888/api/';
+    var serverUrl = 'http://nodejs-ytapi.rhcloud.com/api/';// 'http://127.0.0.1:8888/api/';
 
     angular.module('portal.main', ['ngRoute', 'portal.video'])
         .config(['$routeProvider', function ($routeProvider) {
@@ -16,7 +16,7 @@
                 countsUrl: serverUrl + 'counts',
                 browsersUrl: serverUrl + 'browsers',
                 videosUrl: serverUrl + 'videos',
-                specificVideoUrl: serverUrl + 'videos/video'
+                specificVideoUrl: serverUrl + 'videos/'
             }
         })
         .controller('MainController', ["config", "$scope", "$http", function (config, $scope, $http) {

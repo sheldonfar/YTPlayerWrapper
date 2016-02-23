@@ -6,7 +6,8 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
                 files: {
-                    'build/player.min.js': ['player/player.js']
+                    'build/player.min.js': ['player/player.js'],
+                    'build/producer.min.js': ['player/producer.js']
                 }
             }
         },
