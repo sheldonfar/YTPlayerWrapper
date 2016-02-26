@@ -1,7 +1,7 @@
 (function () {
     var serverUrl = 'http://nodejs-ytapi.rhcloud.com/api/';// 'http://127.0.0.1:8888/api/';
 
-    angular.module('portal.main', ['ngRoute', 'portal.video'])
+    angular.module('portal.main', ['ngRoute', 'portal.video', 'googlechart'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/', {
                 templateUrl: 'main.html',
@@ -37,30 +37,33 @@
                 console.log("No connection");
             });
         }])
-        .controller('ChartController', ["config", "$scope", "$http", function (config, $scope, $http) {
-            if(google) {
-                google.load('visualization', '1.1', {'packages': ['bar', 'corechart'], 'callback': drawCharts});
-            } else {
-                console.log("Google charts not loaded");
-            }
+        .controller("ChartController", ["config", "$http", "$scope", function (config, $http, $scope) {
+            $scope.buildChart = function (data, type, options, name) {
+                $scope[name + '_chart'] = {
+                    type: type,
+                    data: data,
+                    options: options
+                };
+            };
 
-            function drawCharts() {
-                drawBarChart('views');
-                drawBarChart('seconds');
-                drawLocChart('geo');
-                drawLocChart('pie');
-                drawBrowsersCharts();
-            }
+            drawBarChart('views');
+            drawBarChart('seconds');
+            drawLocChart('country');
+            drawLocChart('ref');
+            drawBrowsersCharts();
 
-            function drawBarChart(type) {
+            function drawBarChart(name) {
                 $http({
                     method: 'GET',
                     url: config.serverUrls.serverUrl + 'videos/lastweek'
                 }).success(function (response) {
-                    var data = new google.visualization.DataTable();
-                    data.addColumn('date', 'Date');
-                    data.addColumn('number', type);
-                    var dateAdded;
+                    var data = {
+                        cols: [
+                            {id: 'd', label: 'Date', type: 'date'},
+                            {id: 'n', label: name, type: 'number'}
+                        ],
+                        rows: []
+                    }, dateAdded;
                     for (var i = 0; i < 7; i++) {
                         var minusOneDay = new Date();
                         minusOneDay.setDate(minusOneDay.getDate() - (i + 1));
@@ -68,46 +71,42 @@
                         response.forEach(function (row) {
                             var watchedDate = new Date(row.date);
                             if (minusOneDay.toDateString() === watchedDate.toDateString()) {
-                                data.addRow([minusOneDay, row[type]]);
+                                data.rows.push({c: [{v: minusOneDay},{v: row[name]}]});
                                 dateAdded = true;
                             }
                         });
                         if (!dateAdded) {
-                            data.addRow([minusOneDay, 0]);
+                            data.rows.push({c: [{v: minusOneDay},{v: 0}]});
                         }
                     }
-                    var options = google.charts.Bar.convertOptions({
+
+                    var options = {
                         title: 'Views last week',
                         height: 350
-                    });
-                    var chart = new google.charts.Bar(document.getElementById(type + '-chart'));
-                    chart.draw(data, options);
+                    };
+                    $scope.buildChart(data, 'BarChart', options, name);
                 });
             }
 
             function drawLocChart(type) {
-                var url;
-                if (type == 'geo') url = 'country';
-                if (type == 'pie') url = 'ref';
+                var chartType;
+                if (type == 'country') chartType = 'Geo';
+                if (type == 'ref') chartType = 'Pie';
                 $http({
                     method: 'GET',
-                    url: config.serverUrls.serverUrl + 'locations/' + url
+                    url: config.serverUrls.serverUrl + 'locations/' + type
                 }).success(function (response) {
                     var geoData = [];
-                    if (type == 'geo') geoData.push(['Countries', 'Views']);
-                    if (type == 'pie') geoData.push(['Sites', 'Views']);
+                    if (chartType == 'Geo') geoData.push(['Countries', 'Views']);
+                    if (chartType == 'Pie') geoData.push(['Sites', 'Views']);
                     response.forEach(function (row) {
                         geoData.push([row.country || row.ref, row.total])
                     });
-                    var data = google.visualization.arrayToDataTable(geoData);
                     var options = {
                         title: geoData[0][0],
                         height: 350
                     };
-                    var chart;
-                    if (type == 'geo') chart = new google.visualization.GeoChart(document.getElementById('geo-chart'));
-                    if (type == 'pie') chart = new google.visualization.PieChart(document.getElementById('ref-chart'));
-                    chart.draw(data, options);
+                    $scope.buildChart(geoData, chartType + 'Chart', options, type);
                 });
             }
 
@@ -131,7 +130,7 @@
                     var colors = ['#F75554', '#F9CB7B', '#8BCFEB', '#95D171'];
                     $('.chart').each(function () {
                         var color = colors[Math.floor(Math.random() * colors.length)];
-                        colors = jQuery.grep(colors, function (value) {
+                        colors = $.grep(colors, function (value) {
                             return value != color;
                         });
                         $(this).easyPieChart({

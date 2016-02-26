@@ -77,18 +77,18 @@
         <div id="big-charts" ng-controller="ChartController as chart">
             <div class="row">
                 <div class=" col-md-6">
-                    <div class="panel panel-default padding-div" id="views-chart"></div>
+                    <div class="panel panel-default padding-div" google-chart chart="views_chart"></div>
                 </div>
                 <div class="col-md-6">
-                    <div class="panel panel-default padding-div" id="seconds-chart"></div>
+                    <div class="panel panel-default padding-div" google-chart chart="seconds_chart"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="panel panel-default padding-div" id="ref-chart"></div>
+                    <div class="panel panel-default padding-div" google-chart chart="ref_chart"></div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="panel panel-default padding-div" id="geo-chart"></div>
+                    <div class="panel panel-default padding-div" google-chart chart="country_chart"></div>
                 </div>
             </div>
         </div>
@@ -101,15 +101,15 @@
                             <tr>
                                 <th>Video Id</th>
                                 <th>Views</th>
-                                <th>Added</th>
+                                <th>Last Viewed At</th>
                                 <th>Instant Player</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="video in topVideos">
                                 <td><a ng-href="#/videos?id={{video.video_id}}">{{video.video_id}}</a></td>
-                                <td>{{ video.times_watched }}</td>
-                                <td>{{ video.time_added }}</td>
+                                <td>{{ video.views }}</td>
+                                <td>{{ video.last_viewed }}</td>
                                 <td><button class="btn btn-default"><a ng-href="#/create?id={{video.video_id}}">Instant Player</a></button></td>
                             </tr>
                         </tbody>

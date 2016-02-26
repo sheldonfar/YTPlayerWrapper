@@ -7,8 +7,9 @@
         'portal.about'
     ]);
 
-    app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/'});
+    app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+        $routeProvider
+            .otherwise({redirectTo: '/'});
     }]);
 
     app.filter('secondsToDateTime', [function () {

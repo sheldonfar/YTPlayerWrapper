@@ -12,7 +12,7 @@ if(!window.ytp) {
         playerScript.onload = function() {
             ytp.YTPlayer();
         };
-        playerScript.src = 'http://sheldonfar.com/ytplayer/player.min.js';
+        playerScript.src = 'https://rawgit.com/sheldonfar/YTPlayerWrapper/master/build/player.min.js';//'http://sheldonfar.com/ytplayer/player.min.js';
         (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(playerScript);
     })();
 } else {

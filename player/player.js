@@ -64,7 +64,6 @@
                     switch (e.data) {
                         case 0:
                             typeof videoOptions.onEnd === "function" ? videoOptions.onEnd(e) : void 0;
-                            ytp.buildIntervals();
                             break;
                         case 1:
                             typeof videoOptions.onPlay === "function" ? videoOptions.onPlay(e) : void 0;
@@ -73,12 +72,10 @@
                             break;
                         case 2:
                             typeof videoOptions.onPause === "function" ? videoOptions.onPause(e) : void 0;
-                            ytp.buildIntervals();
                             ytp.sendStats();
                             break;
                         case 3:
                             typeof videoOptions.onBuffer === "function" ? videoOptions.onBuffer(e) : void 0;
-                            ytp.buildIntervals();
                             break;
                     }
                 },
@@ -126,7 +123,6 @@
                         if (playerState == 1) {
                             currentSecond = parseInt(currentTime.toFixed());
                             seconds.push(currentSecond);
-                            console.log('Second:' + currentSecond + " watched");
                         }
                     }, 1000);
                 },
@@ -149,9 +145,6 @@
                     intervals.push({
                         time_from: begin,
                         time_to: seconds[seconds.length - 1]
-                    });
-                    intervals.forEach(function (item) {
-                        $('body').append('Interval: ' + item.time_from + ":" + item.time_to + '<br>');
                     });
                 },
                 showSlides: function () {
@@ -214,6 +207,8 @@
                     var nAgt = navigator.userAgent;
                     var browserName = navigator.appName;
                     var nameOffset, verOffset;
+
+                    ytp.buildIntervals();
 
                     if ((verOffset = nAgt.indexOf("Opera")) != -1) {
                         browserName = "Opera";

@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('portal.video', ['ngRoute', 'ngNotify', 'portal.main'])
+    angular.module('portal.video', ['ngRoute', 'ngNotify', 'portal.main', 'googlechart'])
 
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/videos', {
@@ -44,7 +44,6 @@
                 $scope.searchVideo = {videoId: id, loaded: false};
                 $http({
                     method: 'GET',
-                    params: {videoId: id},
                     url: config.serverUrls.specificVideoUrl + id
                 }).success(function (data) {
                     if (data.length > 0) {
@@ -61,6 +60,7 @@
                             }
                         });
                         $scope.loadYouTubePlayer();
+                        $scope.buildImpressionChart(data);
                     } else {
                         $scope.videoNotFound = true;
                         ngNotify.set('Video not found. Maybe <a href="#create?id=' + id + '">Create a player from it</a> instead?', {
@@ -91,5 +91,26 @@
                 $scope.searchVideo.loaded = true;
                 ngNotify.set('Video found! :)', 'success');
             };
+
+            $scope.buildImpressionChart = function (data) {
+                console.log(JSON.stringify(data, null, 2));
+                var chartData = {
+                    cols: [
+                        {id: 'd', label: 'Time', type: 'number'},
+                        {id: 'n', label: 'Impressions', type: 'number'}
+                    ],
+                    rows: []
+                };
+                data.rows.push({c: [{v: minusOneDay}, {v: row[name]}]});
+                var options = {
+                    title: 'Video impressions',
+                    height: 350
+                };
+                $scope[name + '_chart'] = {
+                    type: type,
+                    data: data,
+                    options: options
+                };
+            }
         }])
 })();
