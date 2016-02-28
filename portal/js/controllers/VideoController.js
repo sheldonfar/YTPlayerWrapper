@@ -22,7 +22,7 @@
             var id = getParameterByName('id');
             if (id) {
                 $scope.id = id;
-                this.getVideoData(id);
+                $scope.getVideoData(id);
             }
 
             ngNotify.config({
@@ -32,7 +32,7 @@
                 duration: 3000
             });
 
-            this.getVideoData = function (id) {
+            $scope.getVideoData = function (id) {
                 if (!id) {
                     ngNotify.set('Video id is empty!', 'warn');
                 }
@@ -49,16 +49,7 @@
                     if (data.length > 0) {
                         $scope.searchVideo.embedCode = $sce.trustAsHtml('<iframe class="embed-responsive-item" src="//www.youtube.com/embed/' + id + '"></iframe>');
                         $scope.searchVideo.sessions = [];
-                        $.each(data, function (i, item) {
-                            $scope.searchVideo.sessions[i] = {sessionId: item.session_id, fragments: []};
-                            var time_from = item.all_time_from.split(',');
-                            var time_to = item.all_time_to.split(',');
-                            for (var j = 0; j < time_from.length; j++) {
-                                var fragment = time_from[j] + ' - ' + time_to[j];
-                                fragment += (j < time_from.length - 1) ? ', ' : '';
-                                $scope.searchVideo.sessions[i].fragments.push(fragment);
-                            }
-                        });
+                        $scope.searchVideo.data = data;
                         $scope.loadYouTubePlayer();
                         $scope.buildImpressionChart(data);
                     } else {
@@ -76,6 +67,7 @@
                     method: 'GET',
                     url: "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=" + $scope.searchVideo.videoId + "&key=" + apiKey
                 }).success(function (ytData) {
+                    console.log(JSON.stringify(ytData,null,2));
                     var date = new Date(ytData.items[0].snippet.publishedAt);
                     $scope.searchVideo.title = ytData.items[0].snippet.title;
                     $scope.searchVideo.publishedAt = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
@@ -93,24 +85,75 @@
             };
 
             $scope.buildImpressionChart = function (data) {
-                console.log(JSON.stringify(data, null, 2));
                 var chartData = {
                     cols: [
-                        {id: 'd', label: 'Time', type: 'number'},
+                        {id: 'd', label: 'Second', type: 'number'},
                         {id: 'n', label: 'Impressions', type: 'number'}
                     ],
                     rows: []
                 };
-                data.rows.push({c: [{v: minusOneDay}, {v: row[name]}]});
+                var newData = [];
+                $.each(data, function (index, item) {
+                    var intervals = item.intervals.split(',');
+                    intervals.forEach(function (interval) {
+                        var seconds = [];
+                        if (interval.indexOf('-') > -1) {
+                            var splitted = interval.split('-');
+                            if (+splitted[1] < +splitted[0]) {
+                                return;
+                            }
+                            for (var i = +splitted[0]; i <= +splitted[1]; i++) {
+                                seconds.push(i);
+                            }
+                        } else {
+                            seconds.push(+interval);
+                        }
+                        data[index].intervals = seconds;
+                        var counts = {};
+                        seconds.forEach(function (x) {
+                            counts[x] = (counts[x] || 0) + 1;
+                        });
+                        newData.push(counts);
+                    });
+                });
+                var result = {};
+                var item = null, keys = null;
+                for (var c = 0; c < newData.length; c++) {
+                    item = newData[c];
+                    keys = Object.keys(item);
+                    keys.forEach(function (key) {
+                        if (!result[key]) {
+                            result[key] = item[key];
+                        }
+                        else {
+                            result[key] += item[key];
+                        }
+                    })
+                }
+
+                for (var key in result) {
+                    if (result.hasOwnProperty(key)) {
+                        chartData.rows.push({c: [{v: +key}, {v: +result[key]}]});
+                    }
+                }
+
                 var options = {
                     title: 'Video impressions',
-                    height: 350
+                    height: 350,
+                    hAxis: {
+                        title: 'Time'
+                    },
+                    vAxis: {
+                        title: 'Views'
+                    }
                 };
-                $scope[name + '_chart'] = {
-                    type: type,
-                    data: data,
+                $scope['impression_chart'] = {
+                    type: 'LineChart',
+                    data: chartData,
                     options: options
                 };
+
+                $scope.impressionChartBuilt = true;
             }
         }])
 })();

@@ -13,6 +13,7 @@
     "angular-route": "1.5.0",
     "angular-datatables": "",
     "ng-notify": "~0.7.1",
-    "angular-google-chart": "^0.1.0"
+    "angular-google-chart": "^0.1.0",
+    "underscore": "^1.8.3"
   }
 }
