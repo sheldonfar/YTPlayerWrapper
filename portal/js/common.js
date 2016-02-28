@@ -7,3 +7,12 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+function getVideoId(text) {
+    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = text.match(regExp);
+    if (match && match[2].length == 11) {
+        text = match[2];
+    }
+    return text;
+}

@@ -1,6 +1,4 @@
-<script src="js/playerHandler.js"></script>
-<script src="js/playerGenerator.js"></script>
-<div class="container-fluid xyz" ng-controller="CreatePlayerController as create">
+<div class="container-fluid xyz" id="create-controller" ng-controller="CreatePlayerController as create" ng-init="createPlayer();injectPlayerTag()">
     <div class="row">
         <div class="col-md-8" style="">
             <div class="panel panel-default">
@@ -48,20 +46,20 @@
                             <div class="col-xs-4 col-sm-2 col-md-2">
                                 <div class="form-group">
                                     <input type="text" id="playerWidth" class="form-control" placeholder="Width"
-                                           tabindex="1">
+                                           tabindex="1" ng-model="width">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" id="playerHeight" class="form-control" placeholder="Height"
-                                           tabindex="2">
+                                           tabindex="2" ng-model="height">
                                 </div>
                             </div>
                             <div class="col-xs-4 col-sm-2 col-md-2">
                                 <div class="form-group">
-                                    <input type="text" id="videoId" class="form-control" placeholder="Video Id"
-                                           tabindex="3">
+                                    <input type="text" id="videoId" class="form-control" placeholder="Video Id or URL"
+                                           tabindex="3" ng-model="videoId">
                                 </div>
                                 <div class="form-group">
-                                    <select id="theme" class="form-control" tabindex="4">
+                                    <select id="theme" class="form-control" tabindex="4" ng-model="videoId">
                                         <option disabled="disabled">Theme</option>
                                         <option>Dark</option>
                                         <option>Light</option>
@@ -70,22 +68,22 @@
                             </div>
                             <div class="col-xs-4 col-sm-2 col-md-2">
                                 <div class="form-group">
-                                    <label><input type="checkbox" id="autoplay" tabindex="5"> Autoplay</label>
-                                    <label><input type="checkbox" id="subtitles" tabindex="6"> Force subtitles</label>
-                                    <label><input type="checkbox" id="annotations" tabindex="7"> Force
+                                    <label><input type="checkbox" id="autoplay" tabindex="5" ng-model="autoplay"> Autoplay</label>
+                                    <label><input type="checkbox" id="subtitles" tabindex="6" ng-model="subtitles"> Force subtitles</label>
+                                    <label><input type="checkbox" id="annotations" tabindex="7" ng-model="annotations"> Force
                                         annotations</label>
-                                    <label><input type="checkbox" id="info" tabindex="8"> Show Info</label>
+                                    <label><input type="checkbox" id="info" tabindex="8" ng-model="info"> Show Info</label>
                                 </div>
                             </div>
                             <div class="col-xs-4 col-sm-2 col-md-2">
                                 <div class="form-group">
-                                    <label><input type="checkbox" id="related" tabindex="9"> Show related videos</label>
-                                    <label><input type="checkbox" id="hidelogo" tabindex="10"> Hide YT logo</label>
+                                    <label><input type="checkbox" id="related" tabindex="9" ng-model="related"> Show related videos</label>
+                                    <label><input type="checkbox" id="hidelogo" tabindex="10" ng-model="hidelogo"> Hide YT logo</label>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <button id="generate-button" class="form-control btn btn-success">Generate</button>
+                    <button id="generate-button" class="form-control btn btn-success" ng-click="createPlayer()">Generate</button>
                 </div>
             </div>
         </div>
@@ -102,12 +100,12 @@
             <div class="panel panel-default" style="margin-bottom: 0;">
                 <div class="panel-heading">Player Tag</div>
                 <div class="panel-body">
-                    <textarea class="form-control" rows="10" id="txtPlayerTag"></textarea>
+                    <textarea class="form-control" rows="10" id="txtPlayerTag" ng-model="playerTag" ng-change="injectPlayerTag()">{{playerTag}}</textarea>
                 </div>
                 <div class="panel-footer">
                     <span>
                         <button class="btn btn-default" id="btnCopy" type="button">Copy Player Tag</button>
-                        <button class="btn btn-default pull-right" id="injectPlayerTag" type="button">Inject Player Tag</button>
+                        <button class="btn btn-default pull-right" id="injectPlayerTag" type="button" ng-click="injectPlayerTag()">Inject Player Tag</button>
                     </span>
                 </div>
             </div>

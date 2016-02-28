@@ -193,7 +193,11 @@
                         type: 'POST',
                         dataType: 'jsonp',
                         success: function (location) {
-                            userLocation = location.country_code;
+                            userLocation = location && location.country_code;
+                            console.log("User location " + userLocation);
+                        },
+                        error: function () {
+                            userLocation = 'Unknown';
                         }
                     });
                 },

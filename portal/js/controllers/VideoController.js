@@ -36,11 +36,7 @@
                 if (!id) {
                     ngNotify.set('Video id is empty!', 'warn');
                 }
-                var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-                var match = id.match(regExp);
-                if (match && match[2].length == 11) {
-                    id = match[2];
-                }
+                id = getVideoId(id);
                 $scope.searchVideo = {videoId: id, loaded: false};
                 $http({
                     method: 'GET',
