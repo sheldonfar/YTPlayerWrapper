@@ -2,4 +2,5 @@
 *.xml
 .idea/ytapi.com.iml
 bower_components
+node_modules
 npm-debug.log
