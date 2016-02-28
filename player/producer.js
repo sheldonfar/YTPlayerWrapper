@@ -1,19 +1,20 @@
-if(!window.ytp) {
-    (function(){
+if (!window.ytp || !window.jQuery) {
+    (function () {
         if (!window.jQuery) {
             var jqueryScript = document.createElement('script');
             jqueryScript.type = 'text/javascript';
+            jqueryScript.onload = function () {
+                var playerScript = document.createElement('script');
+                playerScript.type = 'text/javascript';
+                playerScript.onload = function () {
+                    ytp.YTPlayer();
+                };
+                playerScript.src = 'https://rawgit.com/sheldonfar/YTPlayerWrapper/master/build/player.min.js'; //'http://sheldonfar.com/ytplayer/player.min.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(playerScript);
+            };
             jqueryScript.src = 'https://code.jquery.com/jquery-2.2.0.min.js';
-            (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(jqueryScript);
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(jqueryScript);
         }
-
-        var playerScript = document.createElement('script');
-        playerScript.type = 'text/javascript';
-        playerScript.onload = function() {
-            ytp.YTPlayer();
-        };
-        playerScript.src = 'https://rawgit.com/sheldonfar/YTPlayerWrapper/master/build/player.min.js'; //'http://sheldonfar.com/ytplayer/player.min.js';
-        (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(playerScript);
     })();
 } else {
     ytp.YTPlayer();
