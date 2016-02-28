@@ -189,7 +189,7 @@
                 },
                 getLocation: function () {
                     $.ajax({
-                        url: '//freegeoip.net/json/',
+                        url: 'https://freegeoip.net/json/',
                         type: 'POST',
                         dataType: 'jsonp',
                         success: function (location) {
@@ -206,23 +206,22 @@
 
                     var nAgt = navigator.userAgent;
                     var browserName = navigator.appName;
-                    var nameOffset, verOffset;
 
                     ytp.buildIntervals();
 
-                    if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+                    if (nAgt.indexOf("Opera") != -1) {
                         browserName = "Opera";
                     }
-                    else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+                    else if (nAgt.indexOf("MSIE") != -1) {
                         browserName = "IE";
                     }
-                    else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+                    else if (nAgt.indexOf("Chrome") != -1) {
                         browserName = "Chrome";
                     }
-                    else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+                    else if (nAgt.indexOf("Safari") != -1) {
                         browserName = "Safari";
                     }
-                    else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+                    else if (nAgt.indexOf("Firefox") != -1) {
                         browserName = "Firefox";
                     }
                     var stats = {
@@ -230,7 +229,7 @@
                         sessionId: sessionId,
                         videoId: videoOptions.videoId,
                         videoLength: player.getDuration().toFixed(),
-                        browserName: browserName,
+                        browserName: browserName || 'Unknown',
                         location: userLocation,
                         ref: window.location.href
                     };
@@ -239,7 +238,7 @@
                         url: url,
                         data: stats,
                         success: function () {
-                            console.log(" DATA " + JSON.stringify(stats, null, 4) + " SENT!");
+                            console.log(" DATA " + JSON.stringify(stats, null, 2) + " SENT!");
                         },
                         error: function () {
                             console.log("ERROR SENDING DATA!");
@@ -258,6 +257,8 @@
                     options.videoId = options.videoId || 'OPf0YbXqDm0';
                     options.playerVars = options.playerVars || {};
                     options.slides = options.slides | {};
+                    options.onStateChange = options.onStateChange || function () {};
+                    options.onReady = options.onReady || function () {};
                     ytp.setVideoOptions(options);
                     ytp.setId(options.id);
                     if (ytp.isApiReady()) {
