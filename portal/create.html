@@ -9,29 +9,29 @@
                 <div id="btnPanel" class="panel-footer">
                     <div class="row">
                         <div class="col-xs-6">
-                            <button type="button" id="btnPlay" class="btn btn-default">
+                            <button type="button" id="btnPlay" class="btn btn-default" ng-click="play()">
                                 <span class="glyphicon glyphicon-play-circle"></span>Play
                             </button>
-                            <button type="button" id="btnPause" class="btn btn-default">
+                            <button type="button" id="btnPause" class="btn btn-default" ng-click="pause()">
                                 <span class="glyphicon glyphicon glyphicon-pause"></span>Pause
                             </button>
-                            <button type="button" id="btnMute" class="btn btn-default">
-                                <span class="glyphicon glyphicon-volume-off"></span>Mute
+                            <button type="button" id="btnMute" class="btn btn-default" ng-click="mute()">
+                                <span class="glyphicon glyphicon-volume-off" ng-init="muteText = 'Mute'"></span>{{muteText}}
                             </button>
                         </div>
                         <div class="col-xs-3 text-center" style="float: right;">
                             <div class="input-group">
-                                <input type="text" id="txtSeek" class="form-control">
+                                <input type="text" id="txtSeek" class="form-control" ng-model="seekToTime">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" id="btnSeek" type="button">Seek</button>
+                                <button class="btn btn-default" id="btnSeek" type="button" ng-click="seekTo(seekToTime)">Seek</button>
                             </span>
                             </div>
                         </div>
                         <div class="col-xs-3 text-center" style="float: right;">
                             <div class="input-group">
-                                <input type="text" id="txtVolume" class="form-control">
+                                <input type="text" id="txtVolume" class="form-control" ng-model="volume">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" id="btnVolume" type="button">Volume</button>
+                                <button class="btn btn-default" id="btnVolume" type="button" ng-click="setVolume(volume)">Volume</button>
                             </span>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="panel-footer">
                     <span>
-                        <button class="btn btn-default" id="btnCopy" type="button">Copy Player Tag</button>
+                        <button class="btn btn-default" id="btnCopy" type="button" ng-click="copyPlayerTag()">Copy Player Tag</button>
                         <button class="btn btn-default pull-right" id="injectPlayerTag" type="button" ng-click="injectPlayerTag()">Inject Player Tag</button>
                     </span>
                 </div>

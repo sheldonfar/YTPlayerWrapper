@@ -13,6 +13,35 @@
             $scope.player = null;
             $scope.events = [];
 
+            $scope.play = function () {
+                player && player.play();
+            };
+
+            $scope.pause = function () {
+                player && player.pause();
+            };
+
+            $scope.seekTo = function (seekTo) {
+                player && player.seekTo(seekTo);
+            };
+
+            $scope.setVolume = function (volume) {
+                player && player.volume(volume);
+            };
+
+            $scope.mute = function () {
+                player && player.mute();
+                if (player.getPlayer().isMuted()) {
+                    $scope.muteText = 'Mute';
+                    $(this).find('span').removeClass('glyphicon-volume-up').addClass('glyphicon-volume-off');
+                    player.getPlayer().unMute();
+                } else {
+                    $scope.muteText = 'Unmute';
+                    $(this).find('span').removeClass('glyphicon-volume-off').addClass('glyphicon-volume-up');
+                    player.getPlayer().mute();
+                }
+            };
+
             $scope.createPlayer = function () {
                 var width = $scope.width || 540;
                 var height = $scope.height || 360;
@@ -42,6 +71,17 @@
 
             $scope.injectPlayerTag = function () {
                 $scope.playerTag && this.loadPlayer();
+            };
+
+            $scope.copyPlayerTag = function () {
+                $('#txtPlayerTag').select();
+                try {
+                    var successful = document.execCommand('copy');
+                    var msg = successful ? 'successful' : 'unsuccessful';
+                    console.log('Copying text command was ' + msg);
+                } catch (err) {
+                    alert('Looks like your browser does not support copying this way. Try copying manually');
+                }
             };
 
             $scope.increaseEvent = function (eventName) {
