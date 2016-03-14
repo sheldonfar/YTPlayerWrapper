@@ -4,8 +4,7 @@
     angular.module('portal.main', ['ngRoute', 'portal.video', 'googlechart'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/', {
-                templateUrl: 'main.html',
-                controller: 'MainController'
+                templateUrl: 'main.html'
             });
         }])
         .constant('config', {
@@ -30,8 +29,9 @@
             });
 
             $http({method: 'GET', url: config.serverUrls.videosUrl}).success(function (data) {
-                //TODO: Limit to top5 by views
-                $scope.topVideos = data;
+                data = _.sortBy(data, function(d) { return d.views * -1; }).reverse();
+                data = data.slice(0,5);
+                $scope.topVideos = data.reverse();
                 $scope.topVideosLoaded = true;
             }).error(function () {
                 console.log("No connection");
