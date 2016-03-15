@@ -48,36 +48,23 @@
                         <span class="video-info video-commentcount"><strong>Comment Count: </strong>{{searchVideo.commentCount}}</span>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8" ng-show="sessionsTableLoaded">
                     <div class="panel panel-default padding-div">
                         <h2 class="text-center">Associated Sessions</h2>
-                        <table class="table table-bordered table-hover table-sessions" id="table-sessions">
-                            <thead>
-                            <tr>
-                                <th>Session ID</th>
-                                <th>Time Intervals</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="session in searchVideo.data">
-                                <td>{{session.session_id}}</td>
-                                <td>{{session.intervals}}</span></td>
-                            </tr>
-                            </tbody>
+                        <table class="table table-bordered table-hover table-sessions" id="sessions-table">
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="row" ng-controller="ChartController as chart" ng-show="impressionChartBuilt">
-                <div class="col-md-6 no-padding" id="big-charts-impressions" >
-                    <div class="panel panel-default padding-div" google-chart chart="impression_chart"></div>
+            <div class="row">
+                <div class="col-md-6 no-padding" id="big-charts-impressions">
+                    <div class="panel panel-default padding-div" google-chart chart="impressions_chart"></div>
                 </div>
                 <div class="col-md-6 no-padding" id="big-charts-views">
                     <div class="panel panel-default padding-div" google-chart chart="views_chart"></div>
                 </div>
             </div>
         </div>
-
 
 
     </div>

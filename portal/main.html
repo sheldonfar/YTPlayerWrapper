@@ -1,6 +1,6 @@
-<div class="container-fluid xyz">
+<div class="container-fluid xyz" ng-controller="MainController as main" >
     <div class="row">
-        <div class="row" ng-controller="MainController as main">
+        <div class="row">
             <div class="numbers">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-blue">
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div id="big-charts" ng-controller="ChartController as chart">
+        <div id="big-charts">
             <div class="row">
                 <div class=" col-md-6">
                     <div class="panel panel-default padding-div" google-chart chart="views_chart"></div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" ng-controller="MainController as main" ng-show="topVideosLoaded">
+        <div class="row" ng-show="topVideosLoaded">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center">Top 5 videos</div>

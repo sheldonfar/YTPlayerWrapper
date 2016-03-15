@@ -1,10 +1,12 @@
 (function () {
     var app = angular.module('portal', [
         'ngRoute',
+        'datatables',
         'portal.main',
         'portal.video',
         'portal.create',
-        'portal.about'
+        'portal.about',
+        'portal.charts',
     ]);
 
     app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
