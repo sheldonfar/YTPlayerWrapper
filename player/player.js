@@ -206,7 +206,7 @@
                     this.sendStats(currentTime);
                 },
                 sendStats: function () {
-                    var url = 'http://127.0.0.1:8888/';//'http://nodejs-ytapi.rhcloud.com/';
+                    var url = 'http://nodejs-ytapi.rhcloud.com/'; //'http://127.0.0.1:8888/';
 
                     var nAgt = navigator.userAgent;
                     var browserName = navigator.appName;
