@@ -25,6 +25,6 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-ftp-deploy');
-    grunt.registerTask('default', ['clean', 'uglify', 'ftp-deploy']);
+    //grunt.loadNpmTasks('grunt-ftp-deploy');
+    grunt.registerTask('default', ['clean', 'uglify'/*, 'ftp-deploy'*/]);
 };

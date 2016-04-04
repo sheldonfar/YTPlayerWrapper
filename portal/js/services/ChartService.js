@@ -11,22 +11,54 @@
                 };
             }
 
-            function drawBarChart(response, name) {
+            function buildViewsChart(response) {
                 var data = {
                     cols: [
                         {id: 'd', label: 'Date', type: 'date'},
-                        {id: 'n', label: name, type: 'number'}
+                        {id: 'n', label: 'Views', type: 'number'}
                     ],
                     rows: []
                 }, dateAdded;
                 for (var i = 0; i < 7; i++) {
                     var minusOneDay = new Date();
-                    minusOneDay.setDate(minusOneDay.getDate() - (i + 1));
+                    minusOneDay.setDate(minusOneDay.getDate() - i);
                     dateAdded = false;
                     response.forEach(function (row) {
                         var watchedDate = new Date(row.date);
                         if (minusOneDay.toDateString() === watchedDate.toDateString()) {
-                            data.rows.push({c: [{v: minusOneDay}, {v: row[name]}]});
+                            data.rows.push({c: [{v: minusOneDay}, {v: row['views']}]});
+                            dateAdded = true;
+                        }
+                    });
+                    if (!dateAdded) {
+                        data.rows.push({c: [{v: minusOneDay}, {v: 0}]});
+                    }
+                }
+                console.log(JSON.stringify(data, null, 2));
+
+                var options = {
+                    title: 'Views',
+                    height: 350
+                };
+                return buildChart(data, 'LineChart', options);
+            }
+
+            function buildTimeChart(response) {
+                var data = {
+                    cols: [
+                        {id: 'd', label: 'Date', type: 'date'},
+                        {id: 'n', label: 'Time Watched', type: 'number'}
+                    ],
+                    rows: []
+                }, dateAdded;
+                for (var i = 0; i < 7; i++) {
+                    var minusOneDay = new Date();
+                    minusOneDay.setDate(minusOneDay.getDate() - i);
+                    dateAdded = false;
+                    response.forEach(function (row) {
+                        var watchedDate = new Date(row.date);
+                        if (minusOneDay.toDateString() == watchedDate.toDateString()) {
+                            data.rows.push({c: [{v: watchedDate}, {v: row['seconds']}]});
                             dateAdded = true;
                         }
                     });
@@ -36,10 +68,10 @@
                 }
 
                 var options = {
-                    title: 'Views last week',
+                    title: 'Time watched',
                     height: 350
                 };
-                return buildChart(data, 'BarChart', options);
+                return buildChart(data, 'LineChart', options);
             }
 
             function drawLocChart(response, type) {
@@ -154,10 +186,11 @@
             }
 
             return {
-                drawBarChart: drawBarChart,
+                buildViewsChart: buildViewsChart,
                 drawLocChart: drawLocChart,
                 drawBrowsersCharts: drawBrowsersCharts,
-                buildImpressionsChart: buildImpressionChart
+                buildImpressionsChart: buildImpressionChart,
+                buildTimeChart: buildTimeChart
             };
         }]);
 

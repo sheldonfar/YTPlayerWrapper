@@ -41,8 +41,8 @@
                 method: 'GET',
                 url: config.serverUrls.serverUrl + 'videos/lastweek'
             }).success(function (response) {
-                $scope['views_chart'] = chartService.drawBarChart(response, 'views');
-                $scope['seconds_chart'] = chartService.drawBarChart(response, 'seconds');
+                $scope['views_chart'] = chartService.buildViewsChart(response);
+                $scope['time_chart'] = chartService.buildTimeChart(response);
             });
 
             $http({

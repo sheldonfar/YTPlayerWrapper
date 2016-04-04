@@ -9,22 +9,6 @@
             <button class="searchVideo btn btn-default" ng-click="getVideoData(videoId)">Get Data!</button>
 
             <table class="table table-bordered table-hover table-responsive" id="videos-table">
-                <thead>
-                <tr>
-                    <th>Video ID</th>
-                    <th>Date</th>
-                    <th>Total time watched</th>
-                    <th>Watched intervals</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="video in videos">
-                    <td>{{ video.video_id }}</td>
-                    <td>{{ video.time_added }}</td>
-                    <td>{{ video.watched }}</td>
-                    <td>{{ video.watched }}</td>
-                </tr>
-                </tbody>
             </table>
             <div class="row" ng-show="searchVideo.loaded">
                 <div class="col-md-4">
@@ -57,10 +41,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 no-padding" id="big-charts-impressions">
+                <div class="col-md-6 no-padding" id="big-charts-impressions" ng-show="impressions_chart">
                     <div class="panel panel-default padding-div" google-chart chart="impressions_chart"></div>
                 </div>
-                <div class="col-md-6 no-padding" id="big-charts-views">
+                <div class="col-md-6 no-padding" id="big-charts-views" ng-show="views_chart">
                     <div class="panel panel-default padding-div" google-chart chart="views_chart"></div>
                 </div>
             </div>

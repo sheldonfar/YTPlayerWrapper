@@ -13,11 +13,20 @@
                 var apiKey = 'AIzaSyAh0r3GAU-hX6w62oLc2vrXGKyzelQQMhc';
 
                 $http({method: 'GET', url: config.serverUrls.videosUrl}).success(function (data) {
-                    $scope.videos = data;
-                    $('#videos-table').DataTable({
-                        retrieve: true,
-                        "bLengthChange": false
-                    });
+                    if(!$scope.videos) {
+                        $scope.videos = data;
+                        $('#videos-table').DataTable({
+                            data: data,
+                            bLengthChange: false,
+                            bFilter: false,
+                            bVisible: true,
+                            columns: [
+                                { data: "video_id", title: "Video ID" },
+                                { data: "views", title: "Total views" },
+                                { data: "last_viewed", title: "Last Viewed" }
+                            ]
+                        });
+                    }
                 });
 
                 var id = getParameterByName('id');
@@ -51,6 +60,12 @@
                             $scope.buildSessionsDataTable(data);
                             $scope['impressions_chart'] = chartService.buildImpressionsChart(data);
                             $scope['views_chart'] = chartService.buildViewsChart(data);
+                            $http({
+                                method: 'GET',
+                                url: config.serverUrls.serverUrl + 'locations/country'
+                            }).success(function (response) {
+                                $scope['country_chart'] = chartService.drawLocChart(response, 'country');
+                            });
                         } else {
                             $scope.videoNotFound = true;
                             ngNotify.set('Video not found. Maybe <a href="#create?id=' + id + '">Create a player from it</a> instead?', {
