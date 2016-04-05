@@ -52,6 +52,7 @@
                 var info = $scope.info || false;
                 var related = $scope.related || false;
                 var hideLogo = $scope.hidelogo || false;
+                var theme = $scope.theme || 'dark';
 
                 var options = 'window.YTPlayerSettings = {\n\
                     width: ' + width + ',\n\
@@ -63,7 +64,8 @@
                     iv_load_policy: ' + +annotations + ',\n\
                     rel: ' + +related + ',\n\
                     modestbranding: ' + +hideLogo + ',\n\
-                    showinfo: ' + +info + '\n\
+                    showinfo: ' + +info + ',\n\
+                    theme: "' + theme.toLowerCase() + '"\n\
                     }\n\
                     };';
                 $scope.playerTag = '<div id="YTPlayerContainer"><div class="ytplayer">\n<script type="text/javascript">\n' + options + '\n</script>\n</div></div>\n<script src="https://rawgit.com/sheldonfar/YTPlayerWrapper/master/build/producer.min.js"></script>';

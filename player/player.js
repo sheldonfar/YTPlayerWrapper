@@ -1,7 +1,7 @@
 (function (window, $) {
     window.ytp = window.ytp || (function () {
             var version = '0.0.2';
-            var elementId, sessionId, videoOptions, player, playerState, userLocation;
+            var elementId, sessionId, videoOptions, playerState, userLocation;
             var slides = [];
             var statsCollected = false;
             var seconds = [];
@@ -39,7 +39,7 @@
                 },
 
                 initializeVideo: function () {
-                    player = new YT.Player(elementId, {
+                    this.player = new YT.Player(elementId, {
                         width: videoOptions.width,
                         height: videoOptions.height,
                         videoId: videoOptions.videoId,
@@ -80,47 +80,46 @@
                     }
                 },
                 play: function () {
-                    player.playVideo();
+                    this.player.playVideo();
                     return this;
                 },
                 pause: function () {
-                    player.pauseVideo();
+                    this.player.pauseVideo();
                     return this;
                 },
                 seekTo: function (time) {
-                    player.seekTo(time);
+                    this.player.seekTo(time);
                     return this;
                 },
                 volume: function (vol) {
-                    player.setVolume(vol);
+                    this.player.setVolume(vol);
                     return this;
                 },
                 mute: function () {
-                    player.mute();
+                    this.player.mute();
                     return this;
                 },
                 getPlayer: function () {
-                    return player;
+                    return this.player;
                 },
                 version: function () {
                     return version;
                 },
                 addEventListener: function (event, listener) {
-                    console.log("player " + player);
-                    player.addEventListener(event, listener);
+                    this.player.addEventListener(event, listener);
                     return this;
                 },
                 removeEventListener: function (event, listener) {
-                    player.removeEventListener(event, listener);
+                    this.player.removeEventListener(event, listener);
                     return this;
                 },
                 collectStats: function () {
                     var currentTime = 0, currentSecond = 0;
                     statsCollected = true;
-
+                    var self = this;
                     window.setInterval(function () {
-                        currentTime = player.getCurrentTime();
                         if (playerState == 1) {
+                            currentTime = self.player.getCurrentTime();
                             currentSecond = parseInt(currentTime.toFixed());
                             seconds.push(currentSecond);
                         }
@@ -160,8 +159,9 @@
                             to: (+to[0]) * 60 * 60 + (+to[1]) * 60 + (+to[2]),
                             content: item.content
                         });
+                        var self = this;
                         slideShow[i] = window.setInterval(function () {
-                            currentTime = player.getCurrentTime();
+                            currentTime = self.player.getCurrentTime();
                             if (currentTime >= slides[i].from && currentTime <= slides[i].to) {
 
                                 if (!slides[i].isVisible) {
@@ -202,7 +202,7 @@
                     });
                 },
                 beforeUnload: function () {
-                    var currentTime = player.getCurrentTime();
+                    var currentTime = this.player.getCurrentTime();
                     this.sendStats(currentTime);
                 },
                 sendStats: function () {
@@ -232,7 +232,7 @@
                         intervals: intervals,
                         sessionId: sessionId,
                         videoId: videoOptions.videoId,
-                        videoLength: player.getDuration().toFixed(),
+                        videoLength: this.player.getDuration().toFixed(),
                         browserName: browserName || 'Unknown',
                         location: userLocation,
                         ref: window.location.href

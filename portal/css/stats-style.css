@@ -2,9 +2,11 @@ body {
     color: #73879C;
     background-color: #ECF0F1;
 }
+
 .padding-div {
     padding: 15px;
 }
+
 .huge {
     font-size: 40px;
 }
@@ -15,10 +17,12 @@ body {
     height: 65px;
     border-left: 2px solid #ADB2B5;
 }
+
 .margin {
-    margin-left:10px;
-    margin-right:10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
+
 .right {
     padding-left: 10px;
 }
