@@ -75,15 +75,21 @@
             }
 
             function drawLocChart(response, type) {
-                var chartType;
-                if (type == 'country') chartType = 'Geo';
-                if (type == 'ref') chartType = 'Pie';
+                var chartType, geoData = [];
 
-                var geoData = [];
-                if (chartType == 'Geo') geoData.push(['Countries', 'Views']);
-                if (chartType == 'Pie') geoData.push(['Sites', 'Views']);
+                switch(type) {
+                    case 'country':
+                        chartType = 'Geo';
+                        geoData.push(['Countries', 'Views']);
+                        break;
+                    case 'ref':
+                        chartType = 'Pie';
+                        geoData.push(['Sites', 'Views']);
+                        break;
+                }
+
                 response.forEach(function (row) {
-                    geoData.push([row.country || row.ref, row.total])
+                    geoData.push([row.country || extractDomain(row.ref), row.total])
                 });
                 var options = {
                     title: geoData[0][0],
