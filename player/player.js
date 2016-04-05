@@ -188,17 +188,11 @@
                     return text;
                 },
                 getLocation: function () {
-                    $.ajax({
-                        url: 'https://freegeoip.net/json/',
-                        type: 'POST',
-                        dataType: 'jsonp',
-                        success: function (location) {
-                            userLocation = location && location.country_code;
-                            console.log("User location " + userLocation);
-                        },
-                        error: function () {
-                            userLocation = 'Unknown';
-                        }
+                    $.get("http://ipinfo.io", function(response) {
+                        userLocation = response && response.country;
+                        console.log(userLocation);
+                    }, "jsonp").error(function () {
+                        userLocation = 'Unknown';
                     });
                 },
                 beforeUnload: function () {
